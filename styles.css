@@ -1,0 +1,77 @@
+/* ONE 桌遊 加盟儀表板 — 自訂樣式 */
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-feature-settings: "palt";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Range slider 美化 */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: #e2e8f0;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #f39c12;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(243, 156, 18, 0.5);
+  transition: transform 0.1s;
+}
+input[type="range"]::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #f39c12;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(243, 156, 18, 0.5);
+}
+
+/* 數字淡入動畫 */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-fade { animation: fadeIn 0.4s ease-out; }
+
+/* 錨點分叉 hover 放大 */
+a[href^="#"]:not([href="#"]) {
+  transition: all 0.2s;
+}
+
+/* 滾動淡入（scroll-triggered） */
+section {
+  animation: sectionFade 0.6s ease-out both;
+}
+@keyframes sectionFade {
+  from { opacity: 0.85; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 手機 sticky header 優化 */
+@media (max-width: 640px) {
+  header { backdrop-filter: blur(12px); }
+}
+
+/* 首屏 grid 響應 */
+@media (max-width: 400px) {
+  .text-3xl { font-size: 1.5rem; }
+  .md\:text-5xl { font-size: 2rem; }
+}
+
+/* 防止 tailwind CDN 首次載入閃爍 */
+[x-cloak] { display: none !important; }

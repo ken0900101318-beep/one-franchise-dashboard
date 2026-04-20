@@ -250,48 +250,104 @@ tailwind.config = {
       </div>
     </div>
 
-    <!-- 結果 -->
-    <div x-show="quizResult" x-transition class="bg-white rounded-2xl shadow-cardHover p-6 md:p-8 relative overflow-hidden">
-      <div class="absolute top-0 right-0 bg-accent-500 text-white text-xs font-bold px-4 py-1 rounded-bl-xl">你的專屬建議</div>
-      <div class="text-4xl mb-3">🎯</div>
-      <div class="text-sm text-slate-500 mb-1">根據你的條件</div>
-      <h3 class="text-2xl md:text-3xl font-black text-brand-900 mb-4">適合<span class="text-accent-500" x-text="quizResult?.plan"></span></h3>
-
-      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-5">
-        <div class="bg-slate-50 rounded-xl p-4">
-          <div class="text-xs text-slate-500">建議坪數</div>
-          <div class="text-xl font-black text-brand-700 font-mono" x-text="quizResult?.size"></div>
-        </div>
-        <div class="bg-slate-50 rounded-xl p-4">
-          <div class="text-xs text-slate-500">預估月淨利</div>
-          <div class="text-xl font-black text-green-600 font-mono" x-text="quizResult?.profit"></div>
-        </div>
-        <div class="bg-slate-50 rounded-xl p-4 col-span-2 md:col-span-1">
-          <div class="text-xs text-slate-500">預估回本</div>
-          <div class="text-xl font-black text-accent-500 font-mono" x-text="quizResult?.payback"></div>
-        </div>
+    <!-- 結果：判斷 + 區間 + 卡點 + 解鎖 -->
+    <div x-show="quizResult" x-transition class="bg-white rounded-2xl shadow-cardHover overflow-hidden">
+      <!-- 頭部：判斷 -->
+      <div :class="{
+        'bg-gradient-to-r from-green-500 to-emerald-600': quizResult?.verdictColor === 'green',
+        'bg-gradient-to-r from-amber-500 to-orange-600': quizResult?.verdictColor === 'amber',
+        'bg-gradient-to-r from-blue-500 to-indigo-600': quizResult?.verdictColor === 'blue',
+      }" class="text-white p-6 md:p-8 relative overflow-hidden">
+        <div class="absolute top-0 right-0 bg-white/20 text-white text-xs font-bold px-4 py-1 rounded-bl-xl">⏱️ 已分析完成</div>
+        <div class="text-4xl md:text-5xl mb-2" x-text="quizResult?.verdictIcon"></div>
+        <div class="text-xs md:text-sm opacity-90 mb-1">根據你的條件判斷</div>
+        <div class="text-2xl md:text-4xl font-black" x-text="quizResult?.verdict"></div>
       </div>
 
-      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-5">
-        <div class="flex items-start gap-2">
-          <span class="text-xl">💡</span>
-          <div class="text-sm text-slate-700 leading-relaxed">
-            <span x-text="quizResult?.note"></span>
+      <!-- 主體 -->
+      <div class="p-5 md:p-8">
+
+        <!-- 參考區間 -->
+        <div class="mb-5">
+          <div class="text-xs font-bold text-slate-500 mb-2">📊 參考區間</div>
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
+            <div class="bg-slate-50 rounded-xl p-3 md:p-4">
+              <div class="text-xs text-slate-500">建議方案</div>
+              <div class="font-black text-brand-700 text-sm md:text-base" x-text="quizResult?.plan"></div>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-3 md:p-4">
+              <div class="text-xs text-slate-500">建議坪數</div>
+              <div class="font-black text-brand-700 text-sm md:text-base font-mono" x-text="quizResult?.size"></div>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-3 md:p-4">
+              <div class="text-xs text-slate-500">預估月淨利</div>
+              <div class="font-black text-green-600 text-sm md:text-base font-mono" x-text="quizResult?.profit"></div>
+            </div>
+            <div class="bg-slate-50 rounded-xl p-3 md:p-4">
+              <div class="text-xs text-slate-500">回本區間</div>
+              <div class="font-black text-accent-500 text-sm md:text-base font-mono" x-text="quizResult?.payback"></div>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="bg-gradient-to-br from-brand-700 to-brand-900 text-white rounded-xl p-5 mb-4">
-        <div class="font-bold mb-1">🔒 完整的設備清單、利潤拆解、法規流程</div>
-        <div class="text-sm text-brand-100 mb-3">需由我們的諮詢顧問為你客製化回覆</div>
-        <a href="#form" class="block text-center bg-gradient-to-r from-lime-400 to-green-500 hover:from-lime-500 hover:to-green-600 text-brand-900 font-black px-6 py-4 rounded-full transition shadow-lg animate-pulse-slow">
-          📩 立即預約諮詢顧問（免費）→
-        </a>
-      </div>
+        <!-- 主要卡點 -->
+        <div class="mb-5 bg-amber-50 border border-amber-200 rounded-xl p-4">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">🎯</span>
+            <div class="flex-1">
+              <div class="text-xs font-bold text-amber-700 mb-1">你目前最大的變數</div>
+              <div class="font-bold text-slate-800" x-text="quizResult?.bottleneck"></div>
+            </div>
+          </div>
+        </div>
 
-      <div class="flex justify-center gap-4 text-sm">
-        <button @click="resetQuiz()" class="text-slate-500 hover:text-brand-700">← 重測一次</button>
-        <a href="#calc" class="text-brand-700 hover:underline">想細部試算 →</a>
+        <!-- 下一步 -->
+        <div class="mb-5 bg-brand-50 border border-brand-100 rounded-xl p-4">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">👣</span>
+            <div class="flex-1">
+              <div class="text-xs font-bold text-brand-700 mb-1">建議下一步</div>
+              <div class="font-bold text-slate-800" x-text="quizResult?.nextStep"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 鎖定內容（Curiosity Gap）-->
+        <div class="mb-5 border-2 border-dashed border-slate-300 rounded-xl p-5 bg-slate-50">
+          <div class="text-xs font-bold text-slate-500 mb-3">🔒 接下來的細節需要專人為你解鎖</div>
+          <div class="space-y-2">
+            <div class="flex items-center gap-3 text-sm">
+              <span class="text-lg">🔒</span>
+              <span class="text-slate-700">完整<strong>設備清單</strong>與規格 <span class="text-slate-400 font-mono text-xs">(6 項)</span></span>
+            </div>
+            <div class="flex items-center gap-3 text-sm">
+              <span class="text-lg">🔒</span>
+              <span class="text-slate-700">你所在區域<strong>剩餘加盟保留名額</strong></span>
+            </div>
+            <div class="flex items-center gap-3 text-sm">
+              <span class="text-lg">🔒</span>
+              <span class="text-slate-700">11 家<strong>直營店實戰數據 P&amp;L</strong></span>
+            </div>
+            <div class="flex items-center gap-3 text-sm">
+              <span class="text-lg">🔒</span>
+              <span class="text-slate-700">你的條件對應<strong>完整利潤拆解表</strong></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 螢光 CTA -->
+        <div class="bg-gradient-to-br from-brand-700 to-brand-900 text-white rounded-xl p-5 mb-4">
+          <div class="font-bold text-base md:text-lg mb-1">⚡ 填 3 分鐘預審，立刻解鎖上方全部內容</div>
+          <div class="text-sm text-brand-100 mb-4">並為你保留 <strong class="text-accent-400">48 小時</strong> 區域優先權</div>
+          <a href="#form" class="block text-center bg-gradient-to-r from-lime-400 to-green-500 hover:from-lime-500 hover:to-green-600 text-brand-900 font-black px-6 py-4 rounded-full transition shadow-lg animate-pulse-slow text-base md:text-lg">
+            🚀 解鎖完整評估報告 →
+          </a>
+        </div>
+
+        <div class="flex justify-center gap-4 text-sm">
+          <button @click="resetQuiz()" class="text-slate-500 hover:text-brand-700">← 重測一次</button>
+          <a href="#calc" class="text-brand-700 hover:underline">想看細部試算 →</a>
+        </div>
       </div>
     </div>
   </div>

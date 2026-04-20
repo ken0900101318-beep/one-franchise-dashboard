@@ -118,32 +118,61 @@ function dashboardApp() {
       };
       const base = planMap[budget] || planMap['200_280'];
 
-      // 地區微調
-      const areaNote = {
-        north: '北北基桃屬 D1 管制區，建議先做場地預審確認可變更；都會商圈深夜營收特別強。',
-        hsinchu: '新竹需 D1 變更，建議預審後再入場；科技業客群消費力高。',
-        central: '台中為 D1 最嚴格區（僅商業區可變更），建議鎖定商業區物件；台中以南較彈性。',
-        south: '雲嘉南高屏目前無 D1 要求，投資彈性最大、回本期相對更短。',
-        east: '宜花東離島客群以觀光為主，建議評估週末 / 假日集中度後再定案。',
-        unsure: '地區未定也沒關係，我們可依你的資金與條件反推適合的 3-5 個商圈。',
-      }[area] || '';
+      // 條件判斷（verdict）
+      const needsD1 = ['north', 'hsinchu', 'central'].includes(area);
+      let verdict, verdictColor, verdictIcon;
+      if (site === 'has_d1') {
+        verdict = '可以做';
+        verdictColor = 'green';
+        verdictIcon = '✅';
+      } else if (site === 'has_other' && needsD1) {
+        verdict = '需要先做 D1 預審';
+        verdictColor = 'amber';
+        verdictIcon = '⚠️';
+      } else if (site === 'looking' || site === 'no_idea') {
+        verdict = '適合加入場地開發協助';
+        verdictColor = 'blue';
+        verdictIcon = '🔍';
+      } else {
+        verdict = '可以做';
+        verdictColor = 'green';
+        verdictIcon = '✅';
+      }
 
-      // 場地狀態微調
-      const siteNote = {
-        has_d1: '你已有原 D1 執照物件，可直接進入簽約流程，開店最快 35 天。',
-        has_other: '你有物色物件，我們先幫你做 D1 變更可行性評估再決定。',
-        looking: '我們提供場地開發協助，建築師直接陪看，省你白跑。',
-        no_idea: '建議先鎖定 2-3 個目標區域，我們再共同篩選物件。',
-      }[site] || '';
+      // 主要卡點
+      let bottleneck;
+      if (site === 'has_other' && needsD1) {
+        bottleneck = 'D1 使用執照變更可行性（建築師預審判斷）';
+      } else if (site === 'looking' || site === 'no_idea') {
+        bottleneck = '找到結構/分區/消防都符合的物件';
+      } else if (needsD1) {
+        bottleneck = '地區法規（屬 D1 管制區）';
+      } else if (budget === 'u150') {
+        bottleneck = '預算落在下限，坪數與選址要精準';
+      } else {
+        bottleneck = '無明顯卡點，主要在選址落地速度';
+      }
+
+      // 下一步建議
+      const nextStep = {
+        has_d1: '直接填預審 → 進簽約流程',
+        has_other: '填預審 → 建築師到現場評估 D1',
+        looking: '填預審 → 加入場地開發協助',
+        no_idea: '填預審 → 先聊方向再選點',
+      }[site] || '填預審取得客製化評估';
 
       this.quizResult = {
+        verdict,
+        verdictColor,
+        verdictIcon,
         plan: base.plan,
         size: base.size,
+        budget: ({ u150: '150 萬以下', '150_200': '150-200 萬', '200_280': '200-280 萬', '280p': '280 萬＋' }[budget] || '150-280 萬'),
         profit: base.profit + ' / 月',
         payback: base.payback,
-        note: `${siteNote} ${areaNote}`.trim(),
+        bottleneck,
+        nextStep,
       };
-      // 滾到結果
       setTimeout(() => document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     },
     resetQuiz() {

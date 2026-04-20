@@ -1104,7 +1104,7 @@ tailwind.config = {
             </div>
             <span class="text-slate-400 text-xl" x-text="openFaq===i ? '−' : '+'"></span>
           </button>
-          <div x-show="openFaq===i" x-transition class="px-4 pb-4 text-sm text-slate-700 leading-relaxed border-t border-slate-100 pt-3" x-text="item.a"></div>
+          <div x-show="openFaq===i" x-transition class="px-4 pb-4 text-sm text-slate-700 leading-relaxed border-t border-slate-100 pt-3" x-html="item.a"></div>
         </div>
       </template>
     </div>

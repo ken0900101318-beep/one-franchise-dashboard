@@ -228,7 +228,7 @@ tailwind.config = {
   <div class="bg-gradient-to-r from-brand-50 to-white rounded-2xl p-5 border border-brand-100">
     <div class="text-sm font-medium text-brand-700 mb-2">💡 為什麼是這個金額？</div>
     <div class="grid md:grid-cols-2 gap-4 text-sm">
-      <div><strong class="text-slate-900">傳統桌遊店</strong>：光人事一年 <span class="font-mono text-red-600">60 萬</span>＋（4-5 萬 × 12 月），人走了還要再招</div>
+      <div><strong class="text-slate-900">傳統桌遊店</strong>：需 2 人以上輪班，光人事一年 <span class="font-mono text-red-600">120 萬</span>＋（每月 10 萬以上），人走了還要再招</div>
       <div><strong class="text-slate-900">ONE 無人模式</strong>：月系統費 <span class="font-mono text-brand-700">8,000</span>，一年只花 <span class="font-mono text-brand-700">9.6 萬</span>，省 <span class="font-mono text-accent-500 font-bold">80%</span></div>
     </div>
   </div>
@@ -246,7 +246,20 @@ tailwind.config = {
     <div class="flex items-baseline gap-3 mb-6">
       <span class="text-3xl">📍</span>
       <h2 class="text-2xl md:text-3xl font-black text-brand-900">我家能開嗎？</h2>
-      <span class="text-sm text-slate-500">全台各縣市 D1 管制程度</span>
+      <span class="text-sm text-slate-500">全台法規管制速查</span>
+    </div>
+
+    <!-- D1 使用執照白話說明 -->
+    <div class="mb-5 bg-brand-50 border border-brand-100 rounded-2xl p-5">
+      <div class="flex items-start gap-3">
+        <div class="text-2xl">🏢</div>
+        <div class="flex-1">
+          <div class="font-bold text-brand-700 mb-1">什麼是「D1 使用執照」？一句話說明</div>
+          <div class="text-sm text-slate-700 leading-relaxed">
+            每棟房子蓋好時，政府會核發「使用執照」，標明這棟樓能做什麼（住宅、辦公、商業…）。<strong class="text-brand-700">D1 類組</strong>是「休閒遊憩類」，桌遊、電玩、KTV、撞球場之類的店都屬於這一類。房子原本如果不是 D1，要開這類店就得先「申請變更使用執照」，通過才能合法營業。
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="grid md:grid-cols-2 gap-5">
@@ -281,33 +294,58 @@ tailwind.config = {
       </div>
     </div>
 
-    <!-- 場地開發協助 -->
+    <!-- 變動性備註 -->
+    <div class="mt-5 flex items-start gap-2 text-xs text-slate-500 bg-slate-50 border border-slate-200 rounded-lg p-3">
+      <span class="text-base">ℹ️</span>
+      <div>
+        各縣市法規屬於<strong class="text-slate-700">即時性政策</strong>，未來可能依市府公告更動。總部會持續留意最新消息，合作時依最新規範協助。實際可行性請以我們預審結果為準。
+      </div>
+    </div>
+
+    <!-- 場地開發協助：痛點融入 -->
     <div class="mt-6 rounded-2xl bg-gradient-to-r from-brand-700 to-brand-900 text-white p-6 md:p-8 relative overflow-hidden">
       <div class="absolute top-0 right-0 w-32 h-32 bg-accent-500/20 rounded-full -mr-16 -mt-16"></div>
-      <div class="relative grid md:grid-cols-[1fr_auto] items-center gap-6">
-        <div>
-          <div class="inline-block bg-accent-500 text-xs font-bold px-3 py-1 rounded-full mb-3">🔍 還沒找到場地？</div>
-          <h3 class="text-xl md:text-2xl font-black mb-2">公司協助你找場地</h3>
-          <p class="text-brand-100 leading-relaxed mb-4">
-            由總部商圈顧問依你的目標地區、坪數、預算，<strong class="text-accent-400">幫你找並評估合適物件</strong>，同時預先把關 D1 使用執照可行性。
-          </p>
-          <div class="grid grid-cols-3 gap-3 text-sm">
-            <div class="bg-white/10 rounded-lg p-3 text-center">
-              <div class="text-accent-400 font-black text-lg">最多 3 個</div>
-              <div class="text-xs text-brand-100">物件推薦</div>
-            </div>
-            <div class="bg-white/10 rounded-lg p-3 text-center">
-              <div class="text-accent-400 font-black text-lg">有名額</div>
-              <div class="text-xs text-brand-100">各區管控</div>
-            </div>
-            <div class="bg-white/10 rounded-lg p-3 text-center">
-              <div class="text-accent-400 font-black text-lg">含法規</div>
-              <div class="text-xs text-brand-100">D1 預審</div>
-            </div>
+      <div class="relative">
+        <div class="inline-block bg-accent-500 text-xs font-bold px-3 py-1 rounded-full mb-3">🔍 正在找場地？這些狀況你一定遇過</div>
+        <h3 class="text-xl md:text-2xl font-black mb-4">找場地最常卡的 3 個坑，我們都幫你處理</h3>
+
+        <!-- 3 個痛點卡 -->
+        <div class="grid md:grid-cols-3 gap-3 mb-5">
+          <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+            <div class="text-accent-400 text-xs font-bold mb-1">PAIN 01</div>
+            <div class="font-bold mb-2">跟屋主談不下去</div>
+            <div class="text-xs text-brand-100 leading-relaxed">不知道怎麼跟屋主說要開「桌遊館」，講一半就被打槍。我們給你<strong class="text-accent-400">現成話術 + 公司用印的合作企劃書</strong>，屋主比較敢簽。</div>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+            <div class="text-accent-400 text-xs font-bold mb-1">PAIN 02</div>
+            <div class="font-bold mb-2">原本就 D1 的房子幾乎找不到</div>
+            <div class="text-xs text-brand-100 leading-relaxed">實務上早期取得 D1 使用執照的物件非常稀有。<strong class="text-accent-400">不用執著原 D1</strong>，重點是挑「結構 / 分區 / 消防條件」符合、<strong class="text-accent-400">可以變更</strong>的房子。</div>
+          </div>
+          <div class="bg-white/5 rounded-xl p-4 border border-white/10">
+            <div class="text-accent-400 text-xs font-bold mb-1">PAIN 03</div>
+            <div class="font-bold mb-2">仲介不懂 D1 規矩</div>
+            <div class="text-xs text-brand-100 leading-relaxed">很多仲介也沒處理過 D1 變更案例，你問他他也不懂。我們有<strong class="text-accent-400">建築師直接陪看場地</strong>，現場就能判斷能不能過，省你白跑。</div>
           </div>
         </div>
-        <a href="#form" class="inline-block bg-accent-500 hover:bg-accent-600 text-white font-bold px-6 py-3 rounded-full text-center transition whitespace-nowrap">
-          我想要<br/>場地協助 →
+
+        <!-- 服務內容 -->
+        <div class="grid grid-cols-3 gap-3 text-sm mb-5">
+          <div class="bg-white/10 rounded-lg p-3 text-center">
+            <div class="text-accent-400 font-black text-lg">最多 3 個</div>
+            <div class="text-xs text-brand-100">物件推薦</div>
+          </div>
+          <div class="bg-white/10 rounded-lg p-3 text-center">
+            <div class="text-accent-400 font-black text-lg">建築師</div>
+            <div class="text-xs text-brand-100">現場陪看</div>
+          </div>
+          <div class="bg-white/10 rounded-lg p-3 text-center">
+            <div class="text-accent-400 font-black text-lg">含法規</div>
+            <div class="text-xs text-brand-100">D1 可行性判斷</div>
+          </div>
+        </div>
+
+        <a href="#form" class="inline-block bg-accent-500 hover:bg-accent-600 text-white font-bold px-6 py-3 rounded-full text-center transition">
+          我想要場地協助 →
         </a>
       </div>
     </div>
@@ -442,7 +480,7 @@ tailwind.config = {
       <div class="rounded-xl p-5 bg-gradient-to-br from-brand-700 to-brand-900 text-white">
         <div class="text-xs text-brand-100 mb-1">人力成本</div>
         <div class="text-3xl font-black">省 <span class="text-accent-400">80%</span></div>
-        <div class="text-xs text-brand-100 mt-2">省下每月 4-5 萬店員薪資</div>
+        <div class="text-xs text-brand-100 mt-2">省下每月 10 萬＋人力成本（2 人以上輪班）</div>
       </div>
       <div class="rounded-xl p-5 bg-white border border-slate-200">
         <div class="text-xs text-slate-500 mb-1">營業時數</div>
@@ -522,7 +560,7 @@ tailwind.config = {
       <div class="bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10">
         <div class="text-red-400 font-mono text-sm font-bold mb-2">KEY ISSUE 03</div>
         <div class="text-xl font-bold mb-3">土地使用（最大坑）</div>
-        <div class="text-sm text-brand-100 leading-relaxed">部分地區（台中以北）嚴格要求 D1 類組使用執照，選址錯誤可能無法合法開業或被檢舉。</div>
+        <div class="text-sm text-brand-100 leading-relaxed">台中、新竹、桃園、新北要求 D1 類組使用執照，選址錯誤可能無法合法開業。<span class="text-accent-400">⚠️ 各縣市規範會調整，我們會用最新消息幫你預審。</span></div>
       </div>
     </div>
 

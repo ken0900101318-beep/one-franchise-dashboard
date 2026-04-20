@@ -220,6 +220,7 @@ function dashboardApp() {
       name: '',
       phone: '',
       lineId: '',
+      referrer: '',
       contactTime: '',
       note: '',
     },

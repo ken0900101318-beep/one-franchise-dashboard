@@ -1306,6 +1306,11 @@ tailwind.config = {
                 class="w-full border border-slate-200 rounded-lg px-4 py-3 focus:border-brand-500 focus:outline-none" />
             </div>
             <div>
+              <label class="block text-sm font-medium text-slate-700 mb-1">介紹人 <span class="text-slate-400 font-normal">（選填，若有人推薦你請填寫姓名或門店）</span></label>
+              <input type="text" x-model="form.referrer" placeholder="例：王大明 / 台中北屯店"
+                class="w-full border border-slate-200 rounded-lg px-4 py-3 focus:border-brand-500 focus:outline-none" />
+            </div>
+            <div>
               <label class="block text-sm font-medium text-slate-700 mb-1">最適合聯繫的時段</label>
               <div class="grid grid-cols-2 gap-2">
                 <template x-for="opt in ['中午 12-15','下午 15-18','晚上 18-21','深夜 21-00']">

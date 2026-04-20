@@ -355,88 +355,135 @@ tailwind.config = {
 
 <!-- ============ ① 完整費用 ============ -->
 <section id="cost" class="max-w-6xl mx-auto px-4 py-12 md:py-16">
-  <div class="flex items-baseline gap-3 mb-6">
+  <div class="flex items-baseline gap-3 mb-2">
     <span class="text-3xl">💰</span>
-    <h2 class="text-2xl md:text-3xl font-black text-brand-900">完整費用拆解</h2>
-    <span class="text-sm text-slate-500">一次看完，沒有隱藏</span>
+    <h2 class="text-2xl md:text-3xl font-black text-brand-900">開店要多少錢？</h2>
+  </div>
+  <p class="text-sm text-slate-500 mb-6">先看總投資區間與變動因子，細節可展開</p>
+
+  <!-- 第一層：總投資區間 -->
+  <div class="bg-gradient-to-br from-brand-700 to-brand-900 text-white rounded-2xl p-6 md:p-8 mb-5">
+    <div class="text-xs text-brand-100 mb-1">常見開店總投資</div>
+    <div class="font-mono text-5xl md:text-6xl font-black mb-2"><span class="text-accent-400">150 - 280</span> <span class="text-2xl md:text-3xl">萬</span></div>
+    <div class="text-sm text-brand-100">含系統設備、裝潢、麻將桌家具、押金雜支</div>
   </div>
 
-  <div class="grid md:grid-cols-2 gap-4 mb-6">
-    <!-- 加盟費 -->
-    <div class="bg-white rounded-2xl shadow-card p-6 border border-slate-100">
-      <div class="text-xs text-accent-600 font-bold mb-1">加盟費用（一次性＋月費）</div>
-      <div class="space-y-3 mt-4">
-        <div class="flex justify-between items-center pb-2 border-b border-slate-100">
-          <span>系統建置費（買斷）</span>
-          <span class="font-mono font-bold text-brand-700">NT$ 300,000</span>
-        </div>
-        <div class="flex justify-between items-center pb-2 border-b border-slate-100">
-          <span>月系統維護費</span>
-          <span class="font-mono font-bold text-brand-700">8,000 / 月</span>
-        </div>
-        <div class="flex justify-between items-center pb-2 border-b border-slate-100">
-          <span>繳費機升級百鈔找零 <span class="text-xs text-slate-500">（選配）</span></span>
-          <span class="font-mono text-slate-600">+ 30,000</span>
-        </div>
-        <div class="flex justify-between items-center pb-2 border-b border-slate-100">
-          <span>藍芽喇叭 <span class="text-xs text-slate-500">（每個）</span></span>
-          <span class="font-mono text-slate-600">3,000</span>
-        </div>
-        <div class="flex justify-between items-center">
-          <span>創業諮詢評估 <span class="text-xs text-slate-500">（成功合作可折抵）</span></span>
-          <span class="font-mono text-slate-600">10,000</span>
-        </div>
+  <!-- 4 個變動因子 -->
+  <div class="mb-5">
+    <div class="text-sm font-bold text-brand-700 mb-3">主要變動因子（這 4 項決定你落在區間哪裡）</div>
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+      <div class="bg-white rounded-xl border border-slate-200 p-4">
+        <div class="text-2xl mb-1">📍</div>
+        <div class="font-bold text-slate-800 text-sm mb-1">開店地區</div>
+        <div class="text-xs text-slate-500">北部都會 vs 南部鄉鎮可差 30%</div>
       </div>
-      <div class="mt-4 text-xs text-slate-500 bg-slate-50 rounded-lg p-3">
-        <div class="font-medium mb-1">系統建置費包含：</div>
-        繳費機 · 門禁控電系統 · APP 串接 · 教育訓練 · 格局規劃
+      <div class="bg-white rounded-xl border border-slate-200 p-4">
+        <div class="text-2xl mb-1">📐</div>
+        <div class="font-bold text-slate-800 text-sm mb-1">店面坪數</div>
+        <div class="text-xs text-slate-500">20 → 40 坪裝潢費近倍增</div>
       </div>
-    </div>
-
-    <!-- 開店總投資 -->
-    <div class="bg-white rounded-2xl shadow-card p-6 border border-slate-100">
-      <div class="text-xs text-accent-600 font-bold mb-1">開店總投資（含裝潢設備）</div>
-      <div class="font-mono text-4xl font-black text-brand-700 mt-2 mb-4">150 - 280 <span class="text-xl">萬</span></div>
-      <div class="space-y-2 text-sm">
-        <div class="flex justify-between"><span>系統設備</span><span class="font-mono">30 萬</span></div>
-        <div class="flex items-center gap-2">
-          <div class="flex-1 bg-slate-100 h-2 rounded-full overflow-hidden">
-            <div class="bg-brand-500 h-full" style="width:12%"></div>
-          </div>
-        </div>
-        <div class="flex justify-between"><span>裝潢施工</span><span class="font-mono">80 - 150 萬</span></div>
-        <div class="flex items-center gap-2">
-          <div class="flex-1 bg-slate-100 h-2 rounded-full overflow-hidden">
-            <div class="bg-brand-500 h-full" style="width:55%"></div>
-          </div>
-        </div>
-        <div class="flex justify-between"><span>麻將桌 / 家具</span><span class="font-mono">50 - 80 萬</span></div>
-        <div class="flex items-center gap-2">
-          <div class="flex-1 bg-slate-100 h-2 rounded-full overflow-hidden">
-            <div class="bg-brand-500 h-full" style="width:30%"></div>
-          </div>
-        </div>
-        <div class="flex justify-between"><span>押金 / 雜支</span><span class="font-mono">20 - 30 萬</span></div>
-        <div class="flex items-center gap-2">
-          <div class="flex-1 bg-slate-100 h-2 rounded-full overflow-hidden">
-            <div class="bg-brand-500 h-full" style="width:10%"></div>
-          </div>
-        </div>
+      <div class="bg-white rounded-xl border border-slate-200 p-4">
+        <div class="text-2xl mb-1">🏢</div>
+        <div class="font-bold text-slate-800 text-sm mb-1">D1 變更</div>
+        <div class="text-xs text-slate-500">需變更另加費用（視場地）</div>
       </div>
-      <div class="mt-4 text-xs text-slate-500 bg-amber-50 border border-amber-100 rounded-lg p-3">
-        ⚠️ 若場地需變更 D1 使用執照，費用 50-100 萬另計（視場地條件）
+      <div class="bg-white rounded-xl border border-slate-200 p-4">
+        <div class="text-2xl mb-1">🪑</div>
+        <div class="font-bold text-slate-800 text-sm mb-1">包廂數量</div>
+        <div class="text-xs text-slate-500">麻將桌家具費用等比放大</div>
       </div>
     </div>
   </div>
 
-  <!-- 錨定效應：對比 -->
-  <div class="bg-gradient-to-r from-brand-50 to-white rounded-2xl p-5 border border-brand-100">
-    <div class="text-sm font-medium text-brand-700 mb-2">💡 為什麼是這個金額？</div>
+  <!-- 錨定效應 -->
+  <div class="bg-gradient-to-r from-brand-50 to-white rounded-2xl p-5 border border-brand-100 mb-5">
+    <div class="text-sm font-medium text-brand-700 mb-2">💡 為什麼值得投資這個金額？</div>
     <div class="grid md:grid-cols-2 gap-4 text-sm">
-      <div><strong class="text-slate-900">傳統桌遊店</strong>：需 2 人以上輪班，光人事一年 <span class="font-mono text-red-600">120 萬</span>＋（每月 10 萬以上），人走了還要再招</div>
+      <div><strong class="text-slate-900">傳統桌遊店</strong>：需 2 人以上輪班，光人事一年 <span class="font-mono text-red-600">120 萬＋</span>（每月 10 萬以上）</div>
       <div><strong class="text-slate-900">ONE 無人模式</strong>：月系統費 <span class="font-mono text-brand-700">8,000</span>，一年只花 <span class="font-mono text-brand-700">9.6 萬</span>，省 <span class="font-mono text-accent-500 font-bold">80%</span></div>
     </div>
   </div>
+
+  <!-- 第二層：折疊詳細 -->
+  <details class="bg-white rounded-2xl border border-slate-200 overflow-hidden group">
+    <summary class="cursor-pointer p-5 hover:bg-slate-50 transition list-none flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-xl">📋</span>
+        <div>
+          <div class="font-bold text-brand-700">看完整費用明細（加盟費＋總投資拆解）</div>
+          <div class="text-xs text-slate-500">想清楚每一項花在哪裡再展開</div>
+        </div>
+      </div>
+      <span class="text-slate-400 transition" style="">▼</span>
+    </summary>
+
+    <div class="border-t border-slate-100 p-5 md:p-6 grid md:grid-cols-2 gap-5">
+      <!-- 加盟費 -->
+      <div>
+        <div class="text-xs text-accent-600 font-bold mb-3">加盟費用（一次性＋月費）</div>
+        <div class="space-y-3">
+          <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+            <span class="text-sm">系統建置費（買斷）</span>
+            <span class="font-mono font-bold text-brand-700">NT$ 300,000</span>
+          </div>
+          <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+            <span class="text-sm">月系統維護費</span>
+            <span class="font-mono font-bold text-brand-700">8,000 / 月</span>
+          </div>
+          <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+            <span class="text-sm">繳費機升級百鈔找零 <span class="text-xs text-slate-500">（選配）</span></span>
+            <span class="font-mono text-slate-600">+ 30,000</span>
+          </div>
+          <div class="flex justify-between items-center pb-2 border-b border-slate-100">
+            <span class="text-sm">藍芽喇叭 <span class="text-xs text-slate-500">（每個）</span></span>
+            <span class="font-mono text-slate-600">3,000</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-sm">創業諮詢評估 <span class="text-xs text-slate-500">（成功合作可折抵）</span></span>
+            <span class="font-mono text-slate-600">10,000</span>
+          </div>
+        </div>
+        <div class="mt-4 text-xs text-slate-500 bg-slate-50 rounded-lg p-3">
+          <div class="font-medium mb-1">系統建置費包含：</div>
+          繳費機 · 門禁控電系統 · APP 串接 · 教育訓練 · 格局規劃
+        </div>
+      </div>
+
+      <!-- 總投資拆解 -->
+      <div>
+        <div class="text-xs text-accent-600 font-bold mb-3">總投資拆解（含裝潢設備）</div>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between"><span>系統設備</span><span class="font-mono">30 萬</span></div>
+          <div class="flex items-center gap-2">
+            <div class="flex-1 bg-slate-100 h-2 rounded-full overflow-hidden">
+              <div class="bg-brand-500 h-full" style="width:12%"></div>
+            </div>
+          </div>
+          <div class="flex justify-between"><span>裝潢施工</span><span class="font-mono">80 - 150 萬</span></div>
+          <div class="flex items-center gap-2">
+            <div class="flex-1 bg-slate-100 h-2 rounded-full overflow-hidden">
+              <div class="bg-brand-500 h-full" style="width:55%"></div>
+            </div>
+          </div>
+          <div class="flex justify-between"><span>麻將桌 / 家具</span><span class="font-mono">50 - 80 萬</span></div>
+          <div class="flex items-center gap-2">
+            <div class="flex-1 bg-slate-100 h-2 rounded-full overflow-hidden">
+              <div class="bg-brand-500 h-full" style="width:30%"></div>
+            </div>
+          </div>
+          <div class="flex justify-between"><span>押金 / 雜支</span><span class="font-mono">20 - 30 萬</span></div>
+          <div class="flex items-center gap-2">
+            <div class="flex-1 bg-slate-100 h-2 rounded-full overflow-hidden">
+              <div class="bg-brand-500 h-full" style="width:10%"></div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 text-xs text-slate-500 bg-amber-50 border border-amber-100 rounded-lg p-3">
+          ⚠️ 若場地需變更 D1 使用執照，費用另計（視場地條件）
+        </div>
+      </div>
+    </div>
+  </details>
 
   <div class="mt-4 text-right">
     <button @click="toggleConcern('cost')" class="text-sm text-accent-600 hover:underline">
@@ -649,6 +696,65 @@ tailwind.config = {
   </div>
 </section>
 
+<!-- ============ ✨ 真實案例（主張後接證據）============ -->
+<section id="case" class="bg-white">
+  <div class="max-w-6xl mx-auto px-4 py-12 md:py-16">
+    <div class="flex items-baseline gap-3 mb-2">
+      <span class="text-3xl">✨</span>
+      <h2 class="text-2xl md:text-3xl font-black text-brand-900">實際營運數字</h2>
+    </div>
+    <p class="text-sm text-slate-500 mb-6">以下不是行銷話術，是加盟主真實回報</p>
+
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="rounded-2xl border border-slate-200 p-6 hover:shadow-cardHover transition">
+        <div class="text-xs text-slate-500 mb-2">中部｜30 坪店</div>
+        <div class="font-bold text-brand-700 text-lg mb-3">台中某店</div>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between"><span class="text-slate-600">投資</span><span class="font-mono font-bold">220 萬</span></div>
+          <div class="flex justify-between"><span class="text-slate-600">回本</span><span class="font-mono font-bold text-green-600">10 個月</span></div>
+          <div class="flex justify-between"><span class="text-slate-600">月淨利</span><span class="font-mono font-bold text-accent-500">18-22 萬</span></div>
+        </div>
+        <div class="mt-4 text-xs text-slate-600 italic bg-slate-50 rounded-lg p-3">
+          「本來擔心無人能不能做，結果開起來發現客人比有人店還多。」
+        </div>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 p-6 hover:shadow-cardHover transition">
+        <div class="text-xs text-slate-500 mb-2">30 坪標準範例</div>
+        <div class="font-bold text-brand-700 text-lg mb-3">典型營運</div>
+        <div class="space-y-2 text-sm">
+          <div class="flex justify-between"><span class="text-slate-600">月營收</span><span class="font-mono font-bold">25 萬</span></div>
+          <div class="flex justify-between"><span class="text-slate-600">月支出</span><span class="font-mono">9 萬</span></div>
+          <div class="flex justify-between"><span class="text-slate-600">月淨利</span><span class="font-mono font-bold text-accent-500">16 萬</span></div>
+          <div class="flex justify-between"><span class="text-slate-600">回本</span><span class="font-mono font-bold text-green-600">12.5 個月</span></div>
+        </div>
+        <div class="mt-4 text-xs text-slate-600 italic bg-slate-50 rounded-lg p-3">
+          淨利率穩定在 60-70%，深夜時段貢獻顯著。
+        </div>
+      </div>
+
+      <div class="rounded-2xl bg-gradient-to-br from-brand-700 to-brand-900 text-white p-6">
+        <div class="text-xs text-brand-100 mb-2">品牌成績</div>
+        <div class="font-bold text-lg mb-4">ONE 桌遊 2023-2026</div>
+        <div class="space-y-3">
+          <div>
+            <div class="text-xs text-brand-100">全台門市</div>
+            <div class="font-mono text-2xl font-black"><span class="text-accent-400">100+</span> 家</div>
+          </div>
+          <div>
+            <div class="text-xs text-brand-100">累積會員</div>
+            <div class="font-mono text-2xl font-black"><span class="text-accent-400">12</span> 萬</div>
+          </div>
+          <div>
+            <div class="text-xs text-brand-100">存活率</div>
+            <div class="font-mono text-2xl font-black"><span class="text-accent-400">97%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ ④ 怎麼無人 ============ -->
 <section id="model" class="bg-white">
   <div class="max-w-6xl mx-auto px-4 py-12 md:py-16">
@@ -761,37 +867,36 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ============ ⑤ 法規怎辦 ============ -->
+<!-- ============ ⑤ 法規合規（濃縮版：只講 3 件事）============ -->
 <section id="law" class="max-w-6xl mx-auto px-4 py-12 md:py-16">
-  <div class="flex items-baseline gap-3 mb-6">
+  <div class="flex items-baseline gap-3 mb-2">
     <span class="text-3xl">⚖️</span>
-    <h2 class="text-2xl md:text-3xl font-black text-brand-900">法規怎麼辦？</h2>
-    <span class="text-sm text-slate-500">你專心當老闆，其他交給專業團隊</span>
+    <h2 class="text-2xl md:text-3xl font-black text-brand-900">法規你只要先知道 3 件事</h2>
+  </div>
+  <p class="text-sm text-slate-500 mb-6">細節依你的場地條件客製化，簽約前由總部合規顧問帶你跑完</p>
+
+  <div class="grid md:grid-cols-3 gap-4 mb-5">
+    <div class="rounded-2xl border-2 border-red-100 bg-red-50/50 p-5">
+      <div class="text-3xl mb-2">🏢</div>
+      <div class="font-bold text-red-700 mb-2">① 使用執照（D1）</div>
+      <div class="text-sm text-slate-700 leading-relaxed">台中、新竹、桃園、新北需變更；彰化以南目前免要求。詳細管制見上方「我家能開嗎」區塊。</div>
+    </div>
+    <div class="rounded-2xl border-2 border-amber-100 bg-amber-50/50 p-5">
+      <div class="text-3xl mb-2">🎲</div>
+      <div class="font-bold text-amber-700 mb-2">② 純娛樂合規設計</div>
+      <div class="text-sm text-slate-700 leading-relaxed">自助桌遊必須與博弈行為清楚切割。我們提供店規、計費、服務條款範本，確保合規營運。</div>
+    </div>
+    <div class="rounded-2xl border-2 border-brand-100 bg-brand-50/50 p-5">
+      <div class="text-3xl mb-2">📋</div>
+      <div class="font-bold text-brand-700 mb-2">③ 營登／消防／保險</div>
+      <div class="text-sm text-slate-700 leading-relaxed">營業登記、消防公安申報、公共意外險，裝修前就要規劃。依你縣市規範協助完整跑完流程。</div>
+    </div>
   </div>
 
-  <div class="space-y-3" x-data="{ open:null }">
-    <template x-for="(item, i) in laws" :key="i">
-      <div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
-        <button @click="open = open===i ? null : i" class="w-full p-4 text-left flex items-center justify-between hover:bg-slate-50 transition">
-          <div class="flex items-center gap-3">
-            <span class="text-xl" x-text="item.icon"></span>
-            <span class="font-bold text-brand-700" x-text="item.q"></span>
-          </div>
-          <span class="text-slate-400" x-text="open===i ? '−' : '+'"></span>
-        </button>
-        <div x-show="open===i" x-transition class="px-4 pb-4 text-sm text-slate-700 leading-relaxed" x-text="item.a"></div>
-      </div>
-    </template>
-  </div>
-
-  <div class="mt-6 bg-accent-500/10 border border-accent-400/30 rounded-xl p-5">
-    <div class="flex items-start gap-3">
-      <span class="text-2xl">💬</span>
-      <div class="flex-1">
-        <div class="font-bold text-brand-700 mb-1">法規細節想深入？</div>
-        <div class="text-sm text-slate-700 mb-3">D1 變更流程、純娛樂經營的合規設計、消防公安申報、營登種類 — 這些要看你的場地條件客製化。</div>
-        <a href="#form" class="inline-block bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-2 rounded-full text-sm transition">留下場地資訊，專人 24H 內回覆 →</a>
-      </div>
+  <div class="bg-slate-50 border border-slate-200 rounded-xl p-4 text-sm text-slate-600 leading-relaxed">
+    <div class="flex items-start gap-2">
+      <span class="text-base">ℹ️</span>
+      <div>法規屬即時性政策，會依各縣市公告調整。總部持續留意，合作時以最新規範協助預審；更多細節請見下方「常見問題」或直接填預審。</div>
     </div>
   </div>
 </section>
@@ -818,8 +923,8 @@ tailwind.config = {
       </div>
       <div class="bg-white/5 backdrop-blur rounded-2xl p-6 border border-white/10">
         <div class="text-red-400 font-mono text-sm font-bold mb-2">KEY ISSUE 03</div>
-        <div class="text-xl font-bold mb-3">土地使用（最大坑）</div>
-        <div class="text-sm text-brand-100 leading-relaxed">台中、新竹、桃園、新北要求 D1 類組使用執照，選址錯誤可能無法合法開業。<span class="text-accent-400">⚠️ 各縣市規範會調整，我們會用最新消息幫你預審。</span></div>
+        <div class="text-xl font-bold mb-3">選址踩雷（最大坑）</div>
+        <div class="text-sm text-brand-100 leading-relaxed">選到「法規根本不能變更」的房子、或地段客群錯位，前期投資就沒意義。我們建築師陪看、總部商圈顧問協助篩選，省你白跑。</div>
       </div>
     </div>
 
@@ -950,64 +1055,6 @@ tailwind.config = {
   </div>
 </section>
 
-<!-- ============ ⑧ 真實案例 ============ -->
-<section id="case" class="bg-white">
-  <div class="max-w-6xl mx-auto px-4 py-12 md:py-16">
-    <div class="flex items-baseline gap-3 mb-6">
-      <span class="text-3xl">✨</span>
-      <h2 class="text-2xl md:text-3xl font-black text-brand-900">真實案例</h2>
-      <span class="text-sm text-slate-500">不是行銷話術，是實際營運數字</span>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-4">
-      <div class="rounded-2xl border border-slate-200 p-6 hover:shadow-cardHover transition">
-        <div class="text-xs text-slate-500 mb-2">中部｜30 坪店</div>
-        <div class="font-bold text-brand-700 text-lg mb-3">台中某店</div>
-        <div class="space-y-2 text-sm">
-          <div class="flex justify-between"><span class="text-slate-600">投資</span><span class="font-mono font-bold">220 萬</span></div>
-          <div class="flex justify-between"><span class="text-slate-600">回本</span><span class="font-mono font-bold text-green-600">10 個月</span></div>
-          <div class="flex justify-between"><span class="text-slate-600">月淨利</span><span class="font-mono font-bold text-accent-500">18-22 萬</span></div>
-        </div>
-        <div class="mt-4 text-xs text-slate-600 italic bg-slate-50 rounded-lg p-3">
-          「本來擔心無人能不能做，結果開起來發現客人比有人店還多。」
-        </div>
-      </div>
-
-      <div class="rounded-2xl border border-slate-200 p-6 hover:shadow-cardHover transition">
-        <div class="text-xs text-slate-500 mb-2">30 坪標準範例</div>
-        <div class="font-bold text-brand-700 text-lg mb-3">典型營運</div>
-        <div class="space-y-2 text-sm">
-          <div class="flex justify-between"><span class="text-slate-600">月營收</span><span class="font-mono font-bold">25 萬</span></div>
-          <div class="flex justify-between"><span class="text-slate-600">月支出</span><span class="font-mono">9 萬</span></div>
-          <div class="flex justify-between"><span class="text-slate-600">月淨利</span><span class="font-mono font-bold text-accent-500">16 萬</span></div>
-          <div class="flex justify-between"><span class="text-slate-600">回本</span><span class="font-mono font-bold text-green-600">12.5 個月</span></div>
-        </div>
-        <div class="mt-4 text-xs text-slate-600 italic bg-slate-50 rounded-lg p-3">
-          淨利率 60-70%，深夜時段佔 40% 營收。
-        </div>
-      </div>
-
-      <div class="rounded-2xl bg-gradient-to-br from-brand-700 to-brand-900 text-white p-6">
-        <div class="text-xs text-brand-100 mb-2">品牌成績</div>
-        <div class="font-bold text-lg mb-4">ONE 桌遊 2023-2026</div>
-        <div class="space-y-3">
-          <div>
-            <div class="text-xs text-brand-100">全台門市</div>
-            <div class="font-mono text-2xl font-black"><span class="text-accent-400">100+</span> 家</div>
-          </div>
-          <div>
-            <div class="text-xs text-brand-100">累積會員</div>
-            <div class="font-mono text-2xl font-black"><span class="text-accent-400">12</span> 萬</div>
-          </div>
-          <div>
-            <div class="text-xs text-brand-100">存活率</div>
-            <div class="font-mono text-2xl font-black"><span class="text-accent-400">97%</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- ============ 預審表單（主轉換點） ============ -->
 <section id="form" class="bg-gradient-to-br from-brand-700 to-brand-900 text-white">

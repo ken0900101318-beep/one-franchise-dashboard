@@ -106,7 +106,14 @@ section {
   /* padding 縮小 */
   .p-6 { padding: 1.1rem; }
   .p-5 { padding: 1rem; }
-  /* 字體微調以利單行容納 */
-  .text-xl { font-size: 1.05rem; }
+
+  /* 2026-04-20 字級全面放大（手機閱讀疲勞修正） */
+  body { font-size: 16px; line-height: 1.65; }
+  .text-xs   { font-size: 0.85rem !important; line-height: 1.55; }   /* 12→13.6px */
+  .text-sm   { font-size: 0.98rem !important; line-height: 1.6; }    /* 14→15.7px */
+  .text-base { font-size: 1.08rem !important; line-height: 1.65; }   /* 16→17.3px */
+  .text-lg   { font-size: 1.2rem !important;  line-height: 1.6; }    /* 18→19.2px */
+  .text-xl   { font-size: 1.3rem !important;  line-height: 1.55; }   /* 原本被縮成 1.05rem，改成放大 */
+  .text-2xl  { font-size: 1.55rem !important; line-height: 1.45; }
   .font-mono.text-3xl { font-size: 1.75rem; }
 }

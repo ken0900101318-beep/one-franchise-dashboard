@@ -67,10 +67,20 @@ tailwind.config = {
       <span>即時看板｜全台近 100 家直加盟店共同選擇</span>
     </div>
 
-    <h1 class="text-3xl md:text-5xl font-black leading-tight mb-2">
-      30 秒看懂 ONE 桌遊加盟
+    <h1 class="text-3xl md:text-5xl font-black leading-tight mb-3">
+      重新定義空間價值
     </h1>
-    <p class="text-brand-100 text-sm md:text-base mb-8">3 分鐘預審，專人客製化跟進 — 不用加 LINE、不用電話，先拿到你要的答案</p>
+    <p class="text-accent-400 text-base md:text-xl font-bold mb-2">坪效最大化的無人自動化方案</p>
+    <p class="text-brand-100 text-sm md:text-base mb-5">30 秒看懂成本與回本，3 分鐘預審，24H 專人客製化跟進</p>
+
+    <!-- 我們自己在前線 -->
+    <div class="inline-flex items-start gap-3 bg-gradient-to-r from-lime-400/20 to-emerald-400/20 border border-lime-400/40 rounded-xl p-3 md:p-4 mb-8">
+      <span class="text-2xl">🎯</span>
+      <div>
+        <div class="font-bold text-lime-300 mb-0.5">我們不只賣系統，自己就在前線</div>
+        <div class="text-xs md:text-sm text-brand-100">北中南直營 10 家店，每一項建議都是實戰經驗，不是講理論。</div>
+      </div>
+    </div>
 
     <!-- 核心三數字 -->
     <div class="grid grid-cols-3 gap-3 md:gap-5 mb-6">
@@ -102,9 +112,16 @@ tailwind.config = {
       </div>
     </div>
 
+    <!-- 明星 CTA：開店適配度評估 -->
+    <div class="mt-8 mb-6">
+      <a href="#quiz" class="block bg-gradient-to-r from-lime-400 to-green-500 hover:from-lime-500 hover:to-green-600 text-brand-900 font-black px-6 py-4 rounded-2xl text-center transition shadow-lg animate-pulse-slow text-lg">
+        🎯 60 秒測你適合哪種加盟方案 →
+      </a>
+    </div>
+
     <!-- 錨點分叉 -->
-    <div class="mt-10">
-      <div class="text-sm text-brand-100 mb-3 font-medium">👇 你最想先看哪一塊？選一個開始</div>
+    <div class="mt-6">
+      <div class="text-sm text-brand-100 mb-3 font-medium">👇 或自己探索想看的那一塊</div>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
         <a href="#cost" class="group bg-white/10 hover:bg-white/20 active:bg-white/30 border border-white/20 rounded-xl p-3 md:p-4 text-center transition">
           <div class="text-2xl mb-1">💰</div>
@@ -145,6 +162,138 @@ tailwind.config = {
       </div>
     </div>
 
+  </div>
+</section>
+
+<!-- ============ 🎯 一分鐘開店適配度評估（The Hook） ============ -->
+<section id="quiz" class="bg-gradient-to-br from-amber-50 via-white to-green-50 border-y-2 border-accent-200">
+  <div class="max-w-4xl mx-auto px-4 py-10 md:py-14">
+    <div class="text-center mb-6">
+      <div class="inline-block bg-accent-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">⏱️ 60 秒快速評估</div>
+      <h2 class="text-2xl md:text-3xl font-black text-brand-900 mb-1">你適合哪種加盟方案？</h2>
+      <p class="text-sm text-slate-600">3 題問答，立刻看見建議方案 + 回本預估</p>
+    </div>
+
+    <div x-show="!quizResult" x-transition class="bg-white rounded-2xl shadow-cardHover p-5 md:p-8">
+      <!-- 進度條 -->
+      <div class="flex gap-1 mb-6">
+        <div class="flex-1 h-2 rounded-full" :class="quizStep>=1?'bg-accent-500':'bg-slate-200'"></div>
+        <div class="flex-1 h-2 rounded-full" :class="quizStep>=2?'bg-accent-500':'bg-slate-200'"></div>
+        <div class="flex-1 h-2 rounded-full" :class="quizStep>=3?'bg-accent-500':'bg-slate-200'"></div>
+      </div>
+
+      <!-- Q1 -->
+      <div x-show="quizStep===1">
+        <div class="text-xs text-slate-500 mb-1">Q1 / 3</div>
+        <h3 class="text-lg md:text-xl font-bold text-brand-900 mb-4">你目前有場地了嗎？</h3>
+        <div class="grid gap-3">
+          <template x-for="opt in [
+            { v:'has_d1',    label:'有物色物件，原本就是 D1',        hint:'最省時，直接進簽約'},
+            { v:'has_other', label:'有物色物件，但不是 D1',         hint:'我們可幫你評估能否變更' },
+            { v:'looking',   label:'還在找，想請你們幫我',          hint:'場地開發協助服務' },
+            { v:'no_idea',   label:'還沒開始找，想先了解',          hint:'先看方案再決定' },
+          ]" :key="opt.v">
+            <button type="button" @click="quiz.site = opt.v; quizStep = 2"
+              :class="quiz.site===opt.v ? 'border-accent-500 bg-accent-50' : 'border-slate-200 hover:border-accent-400'"
+              class="text-left border-2 rounded-xl p-4 transition">
+              <div class="font-bold text-brand-900" x-text="opt.label"></div>
+              <div class="text-xs text-slate-500 mt-1" x-text="opt.hint"></div>
+            </button>
+          </template>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div x-show="quizStep===2">
+        <div class="text-xs text-slate-500 mb-1">Q2 / 3</div>
+        <h3 class="text-lg md:text-xl font-bold text-brand-900 mb-4">你預計投入的資金範圍？</h3>
+        <div class="grid gap-3">
+          <template x-for="opt in [
+            { v:'u150', label:'150 萬以下',      hint:'適合小坪數/彰化以南' },
+            { v:'150_200', label:'150-200 萬',   hint:'20-30 坪入門方案' },
+            { v:'200_280', label:'200-280 萬',   hint:'30-40 坪主力方案' },
+            { v:'280p', label:'280 萬以上',      hint:'大坪數/都會區高端配置' },
+          ]" :key="opt.v">
+            <button type="button" @click="quiz.budget = opt.v; quizStep = 3"
+              :class="quiz.budget===opt.v ? 'border-accent-500 bg-accent-50' : 'border-slate-200 hover:border-accent-400'"
+              class="text-left border-2 rounded-xl p-4 transition">
+              <div class="font-bold text-brand-900" x-text="opt.label"></div>
+              <div class="text-xs text-slate-500 mt-1" x-text="opt.hint"></div>
+            </button>
+          </template>
+        </div>
+        <button @click="quizStep = 1" class="mt-4 text-sm text-slate-500">← 上一題</button>
+      </div>
+
+      <!-- Q3 -->
+      <div x-show="quizStep===3">
+        <div class="text-xs text-slate-500 mb-1">Q3 / 3</div>
+        <h3 class="text-lg md:text-xl font-bold text-brand-900 mb-4">預計開店地區？</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <template x-for="opt in [
+            { v:'north', label:'北北基桃', hint:'需 D1' },
+            { v:'hsinchu', label:'新竹',  hint:'需 D1' },
+            { v:'central', label:'中彰',  hint:'台中需 D1' },
+            { v:'south', label:'雲嘉南高屏', hint:'免 D1' },
+            { v:'east', label:'宜花東離島', hint:'個案評估' },
+            { v:'unsure', label:'還不確定', hint:'都可評估' },
+          ]" :key="opt.v">
+            <button type="button" @click="quiz.area = opt.v; computeQuiz()"
+              :class="quiz.area===opt.v ? 'border-accent-500 bg-accent-50' : 'border-slate-200 hover:border-accent-400'"
+              class="text-left border-2 rounded-xl p-3 md:p-4 transition">
+              <div class="font-bold text-brand-900 text-sm md:text-base" x-text="opt.label"></div>
+              <div class="text-xs text-slate-500 mt-1" x-text="opt.hint"></div>
+            </button>
+          </template>
+        </div>
+        <button @click="quizStep = 2" class="mt-4 text-sm text-slate-500">← 上一題</button>
+      </div>
+    </div>
+
+    <!-- 結果 -->
+    <div x-show="quizResult" x-transition class="bg-white rounded-2xl shadow-cardHover p-6 md:p-8 relative overflow-hidden">
+      <div class="absolute top-0 right-0 bg-accent-500 text-white text-xs font-bold px-4 py-1 rounded-bl-xl">你的專屬建議</div>
+      <div class="text-4xl mb-3">🎯</div>
+      <div class="text-sm text-slate-500 mb-1">根據你的條件</div>
+      <h3 class="text-2xl md:text-3xl font-black text-brand-900 mb-4">適合<span class="text-accent-500" x-text="quizResult?.plan"></span></h3>
+
+      <div class="grid grid-cols-2 md:grid-cols-3 gap-3 mb-5">
+        <div class="bg-slate-50 rounded-xl p-4">
+          <div class="text-xs text-slate-500">建議坪數</div>
+          <div class="text-xl font-black text-brand-700 font-mono" x-text="quizResult?.size"></div>
+        </div>
+        <div class="bg-slate-50 rounded-xl p-4">
+          <div class="text-xs text-slate-500">預估月淨利</div>
+          <div class="text-xl font-black text-green-600 font-mono" x-text="quizResult?.profit"></div>
+        </div>
+        <div class="bg-slate-50 rounded-xl p-4 col-span-2 md:col-span-1">
+          <div class="text-xs text-slate-500">預估回本</div>
+          <div class="text-xl font-black text-accent-500 font-mono" x-text="quizResult?.payback"></div>
+        </div>
+      </div>
+
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-5">
+        <div class="flex items-start gap-2">
+          <span class="text-xl">💡</span>
+          <div class="text-sm text-slate-700 leading-relaxed">
+            <span x-text="quizResult?.note"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="bg-gradient-to-br from-brand-700 to-brand-900 text-white rounded-xl p-5 mb-4">
+        <div class="font-bold mb-1">🔒 完整的設備清單、利潤拆解、法規流程</div>
+        <div class="text-sm text-brand-100 mb-3">需由我們的諮詢顧問為你客製化回覆</div>
+        <a href="#form" class="block text-center bg-gradient-to-r from-lime-400 to-green-500 hover:from-lime-500 hover:to-green-600 text-brand-900 font-black px-6 py-4 rounded-full transition shadow-lg animate-pulse-slow">
+          📩 立即預約諮詢顧問（免費）→
+        </a>
+      </div>
+
+      <div class="flex justify-center gap-4 text-sm">
+        <button @click="resetQuiz()" class="text-slate-500 hover:text-brand-700">← 重測一次</button>
+        <a href="#calc" class="text-brand-700 hover:underline">想細部試算 →</a>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -447,50 +596,104 @@ tailwind.config = {
 <!-- ============ ④ 怎麼無人 ============ -->
 <section id="model" class="bg-white">
   <div class="max-w-6xl mx-auto px-4 py-12 md:py-16">
-    <div class="flex items-baseline gap-3 mb-6">
+    <div class="flex items-baseline gap-3 mb-3">
       <span class="text-3xl">🛠️</span>
-      <h2 class="text-2xl md:text-3xl font-black text-brand-900">24H 無人怎麼運作？</h2>
-      <span class="text-sm text-slate-500">客人手機搞定，老闆躺著管</span>
+      <h2 class="text-2xl md:text-3xl font-black text-brand-900">重新定義空間價值</h2>
     </div>
+    <p class="text-slate-600 text-sm md:text-base mb-6">坪效最大化的無人自動化方案 — 把技術效率直接翻譯成每月省下的錢</p>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div class="bg-slate-50 rounded-2xl p-5 text-center">
+    <!-- 4 步流程 -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6">
+      <div class="bg-slate-50 rounded-2xl p-4 md:p-5 text-center">
         <div class="text-3xl mb-2">📱</div>
         <div class="font-bold text-brand-700 mb-1">① 線上預約</div>
-        <div class="text-xs text-slate-600">APP / Web 掃碼<br/>查即時空位</div>
+        <div class="text-xs text-slate-600 leading-relaxed">APP / Web 掃碼<br/>24H 自動收單</div>
       </div>
-      <div class="bg-slate-50 rounded-2xl p-5 text-center">
+      <div class="bg-slate-50 rounded-2xl p-4 md:p-5 text-center">
         <div class="text-3xl mb-2">💳</div>
         <div class="font-bold text-brand-700 mb-1">② 線上付款</div>
-        <div class="text-xs text-slate-600">信用卡 / Line Pay<br/>預收零呆帳</div>
+        <div class="text-xs text-slate-600 leading-relaxed">預收零呆帳<br/>現金流鎖死</div>
       </div>
-      <div class="bg-slate-50 rounded-2xl p-5 text-center">
+      <div class="bg-slate-50 rounded-2xl p-4 md:p-5 text-center">
         <div class="text-3xl mb-2">🚪</div>
         <div class="font-bold text-brand-700 mb-1">③ 自動開門</div>
-        <div class="text-xs text-slate-600">密碼 / 藍芽<br/>自動過電</div>
+        <div class="text-xs text-slate-600 leading-relaxed">密碼 / 藍芽<br/>不用人顧店</div>
       </div>
-      <div class="bg-slate-50 rounded-2xl p-5 text-center">
+      <div class="bg-slate-50 rounded-2xl p-4 md:p-5 text-center">
         <div class="text-3xl mb-2">⏰</div>
         <div class="font-bold text-brand-700 mb-1">④ 自動斷電</div>
-        <div class="text-xs text-slate-600">時間到自動收場<br/>不怕超時</div>
+        <div class="text-xs text-slate-600 leading-relaxed">時間到精準斷電<br/>不浪費 1 度電</div>
       </div>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-4 mt-6">
-      <div class="rounded-xl p-5 bg-gradient-to-br from-brand-700 to-brand-900 text-white">
-        <div class="text-xs text-brand-100 mb-1">人力成本</div>
-        <div class="text-3xl font-black">省 <span class="text-accent-400">80%</span></div>
-        <div class="text-xs text-brand-100 mt-2">省下每月 10 萬＋人力成本（2 人以上輪班）</div>
+    <!-- 技術效能 = 錢的翻譯 -->
+    <div class="mb-6">
+      <div class="text-sm font-bold text-brand-700 mb-3 flex items-center gap-2">
+        <span>💰</span><span>技術效能翻譯成錢</span>
       </div>
-      <div class="rounded-xl p-5 bg-white border border-slate-200">
-        <div class="text-xs text-slate-500 mb-1">營業時數</div>
-        <div class="text-3xl font-black text-brand-700">24 H</div>
-        <div class="text-xs text-slate-600 mt-2">深夜時段為穩定高毛利來源</div>
+      <div class="grid md:grid-cols-2 gap-3">
+        <div class="bg-gradient-to-br from-green-50 to-white border border-green-200 rounded-xl p-4 md:p-5">
+          <div class="flex items-start gap-3">
+            <div class="text-2xl">👥</div>
+            <div class="flex-1">
+              <div class="font-bold text-slate-800 mb-1">遠端管理 = 省人力</div>
+              <div class="text-xs text-slate-500 mb-2">原本需 2 人輪班顧店</div>
+              <div class="text-2xl font-black text-green-600">每月省 <span class="font-mono">10 萬＋</span></div>
+              <div class="text-xs text-slate-600 mt-1">一年省 120 萬以上</div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gradient-to-br from-amber-50 to-white border border-amber-200 rounded-xl p-4 md:p-5">
+          <div class="flex items-start gap-3">
+            <div class="text-2xl">⚡</div>
+            <div class="flex-1">
+              <div class="font-bold text-slate-800 mb-1">遠端精確控電 = 省電費</div>
+              <div class="text-xs text-slate-500 mb-2">時間到自動斷電、無人包廂不通電</div>
+              <div class="text-2xl font-black text-amber-600">每月省 <span class="font-mono">15-20%</span></div>
+              <div class="text-xs text-slate-600 mt-1">電費支出（夏季 24H 營業特別有感）</div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gradient-to-br from-blue-50 to-white border border-blue-200 rounded-xl p-4 md:p-5">
+          <div class="flex items-start gap-3">
+            <div class="text-2xl">💰</div>
+            <div class="flex-1">
+              <div class="font-bold text-slate-800 mb-1">預收機制 = 鎖現金流</div>
+              <div class="text-xs text-slate-500 mb-2">先付款才開門、10 分鐘內未付自動取消</div>
+              <div class="text-2xl font-black text-blue-600">呆帳 <span class="font-mono">0 元</span></div>
+              <div class="text-xs text-slate-600 mt-1">傳統店平均 2-3% 逃單率全部消失</div>
+            </div>
+          </div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-50 to-white border border-purple-200 rounded-xl p-4 md:p-5">
+          <div class="flex items-start gap-3">
+            <div class="text-2xl">🌙</div>
+            <div class="flex-1">
+              <div class="font-bold text-slate-800 mb-1">24H 營業 = 多賺深夜財</div>
+              <div class="text-xs text-slate-500 mb-2">傳統店無法營業的 22:00-6:00</div>
+              <div class="text-2xl font-black text-purple-600">深夜佔 <span class="font-mono">30-40%</span></div>
+              <div class="text-xs text-slate-600 mt-1">月營收來自「別家開不了的時段」</div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="rounded-xl p-5 bg-white border border-slate-200">
-        <div class="text-xs text-slate-500 mb-1">管理方式</div>
-        <div class="text-3xl font-black text-brand-700">手機中控</div>
-        <div class="text-xs text-slate-600 mt-2">營收、監視器、設備遠端一把抓</div>
+    </div>
+
+    <!-- 總結橫幅 -->
+    <div class="rounded-2xl bg-gradient-to-r from-brand-700 to-brand-900 text-white p-5 md:p-6">
+      <div class="grid md:grid-cols-3 gap-4 text-center">
+        <div>
+          <div class="text-xs text-brand-100 mb-1">總成本節省</div>
+          <div class="text-2xl md:text-3xl font-black text-accent-400">一年 150 萬＋</div>
+        </div>
+        <div>
+          <div class="text-xs text-brand-100 mb-1">相較傳統店</div>
+          <div class="text-2xl md:text-3xl font-black">淨利率多 <span class="text-accent-400">40%</span></div>
+        </div>
+        <div>
+          <div class="text-xs text-brand-100 mb-1">管理方式</div>
+          <div class="text-2xl md:text-3xl font-black">手機中控</div>
+        </div>
       </div>
     </div>
 
@@ -960,9 +1163,9 @@ tailwind.config = {
           <div class="flex gap-2 mt-6">
             <button @click="step=2" class="flex-1 py-3 rounded-xl border border-slate-200 text-slate-600">← 上一步</button>
             <button @click="submit()" :disabled="!step3Valid || submitting"
-              :class="step3Valid && !submitting ? 'bg-accent-500 hover:bg-accent-600' : 'bg-slate-200 cursor-not-allowed'"
-              class="flex-[2] py-3 rounded-xl font-bold text-white transition">
-              <span x-show="!submitting">送出預審 🎯</span>
+              :class="step3Valid && !submitting ? 'bg-gradient-to-r from-lime-400 to-green-500 hover:from-lime-500 hover:to-green-600 text-brand-900 animate-pulse-slow' : 'bg-slate-200 cursor-not-allowed text-white'"
+              class="flex-[2] py-3 rounded-xl font-black transition shadow-lg">
+              <span x-show="!submitting">🚀 送出預審</span>
               <span x-show="submitting">送出中...</span>
             </button>
           </div>

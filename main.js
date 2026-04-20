@@ -102,6 +102,56 @@ function dashboardApp() {
       },
     ],
 
+    // 一分鐘開店評估（The Hook Quiz）
+    quizStep: 1,
+    quiz: { site: '', budget: '', area: '' },
+    quizResult: null,
+    computeQuiz() {
+      const { site, budget, area } = this.quiz;
+
+      // 方案對應
+      const planMap = {
+        u150: { plan: '入門輕量方案', size: '20-25 坪', profit: '12-15 萬', payback: '10-14 月' },
+        '150_200': { plan: '標準入門方案', size: '25-30 坪', profit: '14-18 萬', payback: '11-14 月' },
+        '200_280': { plan: '主力標配方案', size: '30-40 坪', profit: '16-22 萬', payback: '12-15 月' },
+        '280p': { plan: '都會高端方案', size: '40 坪＋', profit: '22-30 萬', payback: '13-18 月' },
+      };
+      const base = planMap[budget] || planMap['200_280'];
+
+      // 地區微調
+      const areaNote = {
+        north: '北北基桃屬 D1 管制區，建議先做場地預審確認可變更；都會商圈深夜營收特別強。',
+        hsinchu: '新竹需 D1 變更，建議預審後再入場；科技業客群消費力高。',
+        central: '台中為 D1 最嚴格區（僅商業區可變更），建議鎖定商業區物件；台中以南較彈性。',
+        south: '雲嘉南高屏目前無 D1 要求，投資彈性最大、回本期相對更短。',
+        east: '宜花東離島客群以觀光為主，建議評估週末 / 假日集中度後再定案。',
+        unsure: '地區未定也沒關係，我們可依你的資金與條件反推適合的 3-5 個商圈。',
+      }[area] || '';
+
+      // 場地狀態微調
+      const siteNote = {
+        has_d1: '你已有原 D1 執照物件，可直接進入簽約流程，開店最快 35 天。',
+        has_other: '你有物色物件，我們先幫你做 D1 變更可行性評估再決定。',
+        looking: '我們提供場地開發協助，建築師直接陪看，省你白跑。',
+        no_idea: '建議先鎖定 2-3 個目標區域，我們再共同篩選物件。',
+      }[site] || '';
+
+      this.quizResult = {
+        plan: base.plan,
+        size: base.size,
+        profit: base.profit + ' / 月',
+        payback: base.payback,
+        note: `${siteNote} ${areaNote}`.trim(),
+      };
+      // 滾到結果
+      setTimeout(() => document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+    },
+    resetQuiz() {
+      this.quiz = { site: '', budget: '', area: '' };
+      this.quizStep = 1;
+      this.quizResult = null;
+    },
+
     // 表單
     step: 1,
     submitting: false,

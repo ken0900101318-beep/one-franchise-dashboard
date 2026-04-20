@@ -75,3 +75,26 @@ section {
 
 /* 防止 tailwind CDN 首次載入閃爍 */
 [x-cloak] { display: none !important; }
+
+/* 螢光 CTA 緩脈動 */
+@keyframes pulseSlow {
+  0%, 100% { box-shadow: 0 4px 14px rgba(132, 204, 22, 0.4), 0 0 0 0 rgba(132, 204, 22, 0.4); }
+  50%      { box-shadow: 0 6px 24px rgba(132, 204, 22, 0.6), 0 0 0 8px rgba(132, 204, 22, 0); }
+}
+.animate-pulse-slow {
+  animation: pulseSlow 2.4s ease-in-out infinite;
+}
+
+/* 手機端間距優化：格子卡片不要擠 */
+@media (max-width: 640px) {
+  .grid.grid-cols-2 { gap: 0.75rem; }
+  .rounded-2xl { border-radius: 1rem; }
+  /* 防止手機過長按鈕超出 */
+  a, button { word-break: break-word; }
+  /* padding 縮小 */
+  .p-6 { padding: 1.1rem; }
+  .p-5 { padding: 1rem; }
+  /* 字體微調以利單行容納 */
+  .text-xl { font-size: 1.05rem; }
+  .font-mono.text-3xl { font-size: 1.75rem; }
+}

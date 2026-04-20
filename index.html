@@ -134,6 +134,10 @@ tailwind.config = {
           <div class="text-2xl mb-1">🚀</div>
           <div class="text-sm font-medium">加盟流程</div>
         </a>
+        <a href="#faq" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-3 md:p-4 text-center transition">
+          <div class="text-2xl mb-1">💬</div>
+          <div class="text-sm font-medium">常見問題</div>
+        </a>
         <a href="#case" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-3 md:p-4 text-center transition">
           <div class="text-2xl mb-1">✨</div>
           <div class="text-sm font-medium">真實案例</div>
@@ -245,53 +249,66 @@ tailwind.config = {
       <span class="text-sm text-slate-500">全台各縣市 D1 管制程度</span>
     </div>
 
-    <div class="grid md:grid-cols-3 gap-4">
-      <!-- 台中 -->
-      <div class="rounded-2xl border-2 border-red-200 bg-red-50 p-5">
-        <div class="flex items-center justify-between mb-2">
-          <div class="font-bold text-red-700">台中市</div>
-          <span class="text-xs bg-red-600 text-white px-2 py-0.5 rounded-full">最嚴格</span>
+    <div class="grid md:grid-cols-2 gap-5">
+      <!-- 需要 D1 變更 -->
+      <div class="rounded-2xl border-2 border-red-200 bg-gradient-to-br from-red-50 to-white p-6 relative overflow-hidden">
+        <div class="absolute top-0 right-0 bg-red-600 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">需變更使用執照</div>
+        <div class="text-3xl mb-2">🚧</div>
+        <div class="text-xl font-black text-red-700 mb-3">台中 / 新竹 / 桃園 / 新北</div>
+        <div class="text-sm text-slate-700 leading-relaxed mb-4">
+          這些縣市要求桌遊空間需具備 <strong class="text-red-700">D1 類組使用執照</strong>。若場地原執照不符，需向主管機關申請變更。
         </div>
-        <div class="text-sm text-slate-700 leading-relaxed">僅商業區可變更 D1，已取消區域保障。場地評估門檻高，但成熟商圈客群穩。</div>
+        <ul class="text-sm text-slate-600 space-y-1.5">
+          <li class="flex gap-2"><span class="text-red-500">◆</span><span>建議合作前先做法規預審</span></li>
+          <li class="flex gap-2"><span class="text-red-500">◆</span><span>變更費用依場地條件不同</span></li>
+          <li class="flex gap-2"><span class="text-red-500">◆</span><span>我們有建築師團隊協助評估可行性</span></li>
+        </ul>
       </div>
-      <!-- 新北 -->
-      <div class="rounded-2xl border-2 border-red-200 bg-red-50 p-5">
-        <div class="flex items-center justify-between mb-2">
-          <div class="font-bold text-red-700">新北市</div>
-          <span class="text-xs bg-red-600 text-white px-2 py-0.5 rounded-full">嚴格</span>
+
+      <!-- 彰化以南 -->
+      <div class="rounded-2xl border-2 border-green-200 bg-gradient-to-br from-green-50 to-white p-6 relative overflow-hidden">
+        <div class="absolute top-0 right-0 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-bl-xl">目前無要求</div>
+        <div class="text-3xl mb-2">✅</div>
+        <div class="text-xl font-black text-green-700 mb-3">彰化以南（含雲林、嘉義、台南、高雄、屏東）</div>
+        <div class="text-sm text-slate-700 leading-relaxed mb-4">
+          目前 <strong class="text-green-700">沒有使用執照要求</strong>。場地取得門檻友善，投資彈性更大、回本期相對更短。
         </div>
-        <div class="text-sm text-slate-700 leading-relaxed">嚴格管制使用執照變更，需依行政區逐一確認。建議合作前先做法規預審。</div>
+        <ul class="text-sm text-slate-600 space-y-1.5">
+          <li class="flex gap-2"><span class="text-green-500">◆</span><span>投資金額可控在預算下限</span></li>
+          <li class="flex gap-2"><span class="text-green-500">◆</span><span>裝修工期彈性、開業更快</span></li>
+          <li class="flex gap-2"><span class="text-green-500">◆</span><span>適合首次創業者入場</span></li>
+        </ul>
       </div>
-      <!-- 桃園新竹 -->
-      <div class="rounded-2xl border-2 border-amber-200 bg-amber-50 p-5">
-        <div class="flex items-center justify-between mb-2">
-          <div class="font-bold text-amber-700">桃園 / 新竹</div>
-          <span class="text-xs bg-amber-600 text-white px-2 py-0.5 rounded-full">部分管制</span>
+    </div>
+
+    <!-- 場地開發協助 -->
+    <div class="mt-6 rounded-2xl bg-gradient-to-r from-brand-700 to-brand-900 text-white p-6 md:p-8 relative overflow-hidden">
+      <div class="absolute top-0 right-0 w-32 h-32 bg-accent-500/20 rounded-full -mr-16 -mt-16"></div>
+      <div class="relative grid md:grid-cols-[1fr_auto] items-center gap-6">
+        <div>
+          <div class="inline-block bg-accent-500 text-xs font-bold px-3 py-1 rounded-full mb-3">🔍 還沒找到場地？</div>
+          <h3 class="text-xl md:text-2xl font-black mb-2">公司協助你找場地</h3>
+          <p class="text-brand-100 leading-relaxed mb-4">
+            由總部商圈顧問依你的目標地區、坪數、預算，<strong class="text-accent-400">幫你找並評估合適物件</strong>，同時預先把關 D1 使用執照可行性。
+          </p>
+          <div class="grid grid-cols-3 gap-3 text-sm">
+            <div class="bg-white/10 rounded-lg p-3 text-center">
+              <div class="text-accent-400 font-black text-lg">最多 3 個</div>
+              <div class="text-xs text-brand-100">物件推薦</div>
+            </div>
+            <div class="bg-white/10 rounded-lg p-3 text-center">
+              <div class="text-accent-400 font-black text-lg">有名額</div>
+              <div class="text-xs text-brand-100">各區管控</div>
+            </div>
+            <div class="bg-white/10 rounded-lg p-3 text-center">
+              <div class="text-accent-400 font-black text-lg">含法規</div>
+              <div class="text-xs text-brand-100">D1 預審</div>
+            </div>
+          </div>
         </div>
-        <div class="text-sm text-slate-700 leading-relaxed">部分區域管制，非全面嚴格。多數行政區仍可順利變更，場地條件更彈性。</div>
-      </div>
-      <!-- 台中以南 -->
-      <div class="rounded-2xl border-2 border-green-200 bg-green-50 p-5">
-        <div class="flex items-center justify-between mb-2">
-          <div class="font-bold text-green-700">台中以南</div>
-          <span class="text-xs bg-green-600 text-white px-2 py-0.5 rounded-full">較鬆</span>
-        </div>
-        <div class="text-sm text-slate-700 leading-relaxed">法規規範較寬鬆，場地取得難度低。投資門檻友善、回本期較短。</div>
-      </div>
-      <!-- 外島 -->
-      <div class="rounded-2xl border-2 border-slate-200 bg-slate-50 p-5">
-        <div class="flex items-center justify-between mb-2">
-          <div class="font-bold text-slate-700">其他縣市</div>
-          <span class="text-xs bg-slate-600 text-white px-2 py-0.5 rounded-full">需評估</span>
-        </div>
-        <div class="text-sm text-slate-700 leading-relaxed">依人口、商圈成熟度個別評估。我們提供免費初判服務。</div>
-      </div>
-      <!-- CTA -->
-      <div class="rounded-2xl border-2 border-dashed border-accent-300 bg-gradient-to-br from-accent-400/10 to-transparent p-5 flex flex-col justify-center items-center text-center">
-        <div class="text-3xl mb-2">🎯</div>
-        <div class="font-bold text-brand-700 mb-1">你的場地能不能開？</div>
-        <div class="text-xs text-slate-600 mb-3">填完預審免費拿到專屬評估</div>
-        <a href="#form" class="inline-block bg-accent-500 hover:bg-accent-600 text-white font-bold px-4 py-2 rounded-full text-sm transition">立即評估 →</a>
+        <a href="#form" class="inline-block bg-accent-500 hover:bg-accent-600 text-white font-bold px-6 py-3 rounded-full text-center transition whitespace-nowrap">
+          我想要<br/>場地協助 →
+        </a>
       </div>
     </div>
 
@@ -527,24 +544,32 @@ tailwind.config = {
   <div class="flex items-baseline gap-3 mb-6">
     <span class="text-3xl">🚀</span>
     <h2 class="text-2xl md:text-3xl font-black text-brand-900">加盟流程</h2>
-    <span class="text-sm text-slate-500">從簽約到開幕，35 - 50 天</span>
+    <span class="text-sm text-slate-500">從諮詢到開幕，35 - 50 天</span>
   </div>
 
   <div class="relative">
     <!-- 時間軸 -->
     <div class="hidden md:block absolute top-7 left-0 right-0 h-0.5 bg-slate-200"></div>
 
-    <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
+    <div class="grid grid-cols-2 md:grid-cols-6 gap-4">
       <div class="relative">
         <div class="w-14 h-14 mx-auto rounded-full bg-brand-700 text-white flex items-center justify-center font-black font-mono text-lg relative z-10">1</div>
         <div class="text-center mt-3">
           <div class="font-bold text-brand-700">諮詢評估</div>
           <div class="text-xs text-slate-500 mt-1">1-3 天</div>
-          <div class="text-xs text-slate-600 mt-2">填寫合作意願書<br/>了解場地條件</div>
+          <div class="text-xs text-slate-600 mt-2">填寫合作意願書<br/>了解你的條件</div>
         </div>
       </div>
       <div class="relative">
-        <div class="w-14 h-14 mx-auto rounded-full bg-brand-700 text-white flex items-center justify-center font-black font-mono text-lg relative z-10">2</div>
+        <div class="w-14 h-14 mx-auto rounded-full bg-red-600 text-white flex items-center justify-center font-black font-mono text-lg relative z-10">2</div>
+        <div class="text-center mt-3">
+          <div class="font-bold text-red-700">場地 / D1 預審</div>
+          <div class="text-xs text-slate-500 mt-1">3-7 天</div>
+          <div class="text-xs text-slate-600 mt-2">建築師評估<br/>法規 / 坪效判斷</div>
+        </div>
+      </div>
+      <div class="relative">
+        <div class="w-14 h-14 mx-auto rounded-full bg-brand-700 text-white flex items-center justify-center font-black font-mono text-lg relative z-10">3</div>
         <div class="text-center mt-3">
           <div class="font-bold text-brand-700">簽約準備</div>
           <div class="text-xs text-slate-500 mt-1">3-5 天</div>
@@ -552,7 +577,7 @@ tailwind.config = {
         </div>
       </div>
       <div class="relative">
-        <div class="w-14 h-14 mx-auto rounded-full bg-brand-700 text-white flex items-center justify-center font-black font-mono text-lg relative z-10">3</div>
+        <div class="w-14 h-14 mx-auto rounded-full bg-brand-700 text-white flex items-center justify-center font-black font-mono text-lg relative z-10">4</div>
         <div class="text-center mt-3">
           <div class="font-bold text-brand-700">裝潢施工</div>
           <div class="text-xs text-slate-500 mt-1">30-45 天</div>
@@ -560,7 +585,7 @@ tailwind.config = {
         </div>
       </div>
       <div class="relative">
-        <div class="w-14 h-14 mx-auto rounded-full bg-brand-700 text-white flex items-center justify-center font-black font-mono text-lg relative z-10">4</div>
+        <div class="w-14 h-14 mx-auto rounded-full bg-brand-700 text-white flex items-center justify-center font-black font-mono text-lg relative z-10">5</div>
         <div class="text-center mt-3">
           <div class="font-bold text-brand-700">教育訓練</div>
           <div class="text-xs text-slate-500 mt-1">3-5 天</div>
@@ -575,6 +600,55 @@ tailwind.config = {
           <div class="text-xs text-slate-600 mt-2">開幕活動規劃<br/>遠端技術支援</div>
         </div>
       </div>
+    </div>
+  </div>
+
+  <!-- 重點補充：D1 預審 -->
+  <div class="mt-8 bg-gradient-to-r from-red-50 to-amber-50 border border-red-200 rounded-2xl p-5 md:p-6">
+    <div class="flex items-start gap-4">
+      <div class="text-3xl">🏢</div>
+      <div class="flex-1">
+        <div class="font-bold text-red-700 mb-1">Step 2：為什麼要做「場地 / D1 預審」？</div>
+        <div class="text-sm text-slate-700 leading-relaxed">
+          台中、新竹、桃園、新北需要 D1 使用執照，選錯點可能無法合法開業。我們派建築師先到現場評估使用分區、結構條件、可變更性，<strong class="text-red-700">確認可行才進入簽約</strong>。若評估後不可行，可退部分訂金或協助換點。
+        </div>
+        <div class="mt-3 flex flex-wrap gap-2 text-xs">
+          <span class="bg-white border border-red-200 px-2 py-1 rounded-full text-slate-700">✓ 使用分區確認</span>
+          <span class="bg-white border border-red-200 px-2 py-1 rounded-full text-slate-700">✓ D1 變更可行性</span>
+          <span class="bg-white border border-red-200 px-2 py-1 rounded-full text-slate-700">✓ 消防逃生動線</span>
+          <span class="bg-white border border-red-200 px-2 py-1 rounded-full text-slate-700">✓ 坪效與格局建議</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ⑦.5 常見問題 ============ -->
+<section id="faq" class="bg-slate-50">
+  <div class="max-w-6xl mx-auto px-4 py-12 md:py-16">
+    <div class="flex items-baseline gap-3 mb-6">
+      <span class="text-3xl">💬</span>
+      <h2 class="text-2xl md:text-3xl font-black text-brand-900">常見問題</h2>
+      <span class="text-sm text-slate-500">加盟主最常問的那些事</span>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-3" x-data="{ openFaq: null }">
+      <template x-for="(item, i) in commonFaqs" :key="i">
+        <div class="bg-white rounded-xl border border-slate-200 overflow-hidden hover:shadow-card transition">
+          <button @click="openFaq = openFaq===i ? null : i" class="w-full p-4 text-left flex items-center justify-between hover:bg-slate-50 transition">
+            <div class="flex items-center gap-3">
+              <span class="text-xl" x-text="item.icon"></span>
+              <span class="font-bold text-brand-700 text-sm md:text-base" x-text="item.q"></span>
+            </div>
+            <span class="text-slate-400 text-xl" x-text="openFaq===i ? '−' : '+'"></span>
+          </button>
+          <div x-show="openFaq===i" x-transition class="px-4 pb-4 text-sm text-slate-700 leading-relaxed border-t border-slate-100 pt-3" x-text="item.a"></div>
+        </div>
+      </template>
+    </div>
+
+    <div class="mt-6 text-center text-sm text-slate-500">
+      還有其他問題？<a href="#form" class="text-accent-600 font-bold hover:underline">填預審時一併告訴我們</a>，專人會幫你解答。
     </div>
   </div>
 </section>

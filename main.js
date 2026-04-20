@@ -63,7 +63,7 @@ function dashboardApp() {
       {
         icon: '🏠',
         q: '需要自己找店面嗎？',
-        a: '你可以自行找點，也可以由我們協助提供商圈建議與基本條件方向。確定店址前，我們會協助進行<span class="text-accent-600 font-bold">商圈潛力評估、使用分區與法規可行性初判</span>，降低投資風險。'
+        a: '你可以自行找點，也可由我們協助場地開發。公司<span class="text-accent-600 font-bold">無法協助商圈評估</span>（商圈屬於加盟主的自主判斷），但在確定店址前，我們會協助進行<span class="text-accent-600 font-bold">使用分區與法規可行性初判</span>，並<span class="text-accent-600 font-bold">依坪數與格局評估座位數量是否足夠</span>，協助判斷坪效可行性。'
       },
       {
         icon: '🗺️',

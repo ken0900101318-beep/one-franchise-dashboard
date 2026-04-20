@@ -104,10 +104,10 @@ function dashboardApp() {
 
     // 一分鐘開店評估（The Hook Quiz）
     quizStep: 1,
-    quiz: { site: '', budget: '', area: '' },
+    quiz: { motive: '', painPoint: '', site: '', budget: '', area: '' },
     quizResult: null,
     computeQuiz() {
-      const { site, budget, area } = this.quiz;
+      const { motive, painPoint, site, budget, area } = this.quiz;
 
       // 方案對應
       const planMap = {
@@ -161,6 +161,20 @@ function dashboardApp() {
         no_idea: '填預審 → 先聊方向再選點',
       }[site] || '填預審取得客製化評估';
 
+      // 動機對應的情緒鉤
+      const motiveMsg = {
+        passive: '你想要的是「被動收入」— 正好是無人化模式的核心優勢，你不需要天天到店。',
+        activate: '你想「活化閒置空間」— 無人化方案比傳統店型更快回本、投入更輕。',
+        transform: '你想「傳統店轉型無人化」— 我們有幾家加盟主就是這路線走來的。',
+      }[motive] || '';
+
+      // 痛點對應的解方
+      const painMsg = {
+        staff: '你最怕員工問題 — 我們整套省掉，你不用管排班、薪水、請假。',
+        cash: '你最怕帳務混亂 — 系統自動結算、預收金流，從源頭切掉爭議。',
+        utility: '你最怕無效開銷 — 遠端控電、精確斷電，每月省 15-20% 電費。',
+      }[painPoint] || '';
+
       this.quizResult = {
         verdict,
         verdictColor,
@@ -172,11 +186,13 @@ function dashboardApp() {
         payback: base.payback,
         bottleneck,
         nextStep,
+        motiveMsg,
+        painMsg,
       };
       setTimeout(() => document.getElementById('quiz')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
     },
     resetQuiz() {
-      this.quiz = { site: '', budget: '', area: '' };
+      this.quiz = { motive: '', painPoint: '', site: '', budget: '', area: '' };
       this.quizStep = 1;
       this.quizResult = null;
     },

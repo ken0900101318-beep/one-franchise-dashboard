@@ -115,7 +115,7 @@ tailwind.config = {
     <!-- 明星 CTA：開店適配度評估 -->
     <div class="mt-8 mb-6">
       <a href="#quiz" class="block bg-gradient-to-r from-lime-400 to-green-500 hover:from-lime-500 hover:to-green-600 text-brand-900 font-black px-6 py-4 rounded-2xl text-center transition shadow-lg animate-pulse-slow text-lg">
-        🎯 60 秒測你適合哪種加盟方案 →
+        🎯 60 秒測你的適合方案 + 最大卡點 →
       </a>
     </div>
 
@@ -171,30 +171,31 @@ tailwind.config = {
     <div class="text-center mb-6">
       <div class="inline-block bg-accent-500 text-white text-xs font-bold px-3 py-1 rounded-full mb-2">⏱️ 60 秒快速評估</div>
       <h2 class="text-2xl md:text-3xl font-black text-brand-900 mb-1">你適合哪種加盟方案？</h2>
-      <p class="text-sm text-slate-600">3 題問答，立刻看見建議方案 + 回本預估</p>
+      <p class="text-sm text-slate-600">5 題選擇題，立刻看見建議方案 + 你的最大卡點 + 下一步</p>
     </div>
 
     <div x-show="!quizResult" x-transition class="bg-white rounded-2xl shadow-cardHover p-5 md:p-8">
-      <!-- 進度條 -->
+      <!-- 進度條（5 步）-->
       <div class="flex gap-1 mb-6">
-        <div class="flex-1 h-2 rounded-full" :class="quizStep>=1?'bg-accent-500':'bg-slate-200'"></div>
-        <div class="flex-1 h-2 rounded-full" :class="quizStep>=2?'bg-accent-500':'bg-slate-200'"></div>
-        <div class="flex-1 h-2 rounded-full" :class="quizStep>=3?'bg-accent-500':'bg-slate-200'"></div>
+        <div class="flex-1 h-2 rounded-full transition-all" :class="quizStep>=1?'bg-accent-500':'bg-slate-200'"></div>
+        <div class="flex-1 h-2 rounded-full transition-all" :class="quizStep>=2?'bg-accent-500':'bg-slate-200'"></div>
+        <div class="flex-1 h-2 rounded-full transition-all" :class="quizStep>=3?'bg-accent-500':'bg-slate-200'"></div>
+        <div class="flex-1 h-2 rounded-full transition-all" :class="quizStep>=4?'bg-accent-500':'bg-slate-200'"></div>
+        <div class="flex-1 h-2 rounded-full transition-all" :class="quizStep>=5?'bg-accent-500':'bg-slate-200'"></div>
       </div>
 
-      <!-- Q1 -->
+      <!-- Q1：動機（破冰）-->
       <div x-show="quizStep===1">
-        <div class="text-xs text-slate-500 mb-1">Q1 / 3</div>
-        <h3 class="text-lg md:text-xl font-bold text-brand-900 mb-4">你目前有場地了嗎？</h3>
+        <div class="text-xs text-slate-500 mb-1">Q1 / 5 · 先了解你</div>
+        <h3 class="text-lg md:text-xl font-bold text-brand-900 mb-4">你的加盟動機是？</h3>
         <div class="grid gap-3">
           <template x-for="opt in [
-            { v:'has_d1',    label:'有物色物件，原本就是 D1',        hint:'最省時，直接進簽約'},
-            { v:'has_other', label:'有物色物件，但不是 D1',         hint:'我們可幫你評估能否變更' },
-            { v:'looking',   label:'還在找，想請你們幫我',          hint:'場地開發協助服務' },
-            { v:'no_idea',   label:'還沒開始找，想先了解',          hint:'先看方案再決定' },
+            { v:'passive',    label:'💰 尋找高於定存的被動收入',      hint:'不想天天顧店，想有穩定現金流' },
+            { v:'activate',   label:'🏠 手上有閒置店面，想活化資產',  hint:'房東或投資人思維' },
+            { v:'transform',  label:'🔁 本身有傳統店，想轉型無人化',  hint:'降低人事、延長營業' },
           ]" :key="opt.v">
-            <button type="button" @click="quiz.site = opt.v; quizStep = 2"
-              :class="quiz.site===opt.v ? 'border-accent-500 bg-accent-50' : 'border-slate-200 hover:border-accent-400'"
+            <button type="button" @click="quiz.motive = opt.v; quizStep = 2"
+              :class="quiz.motive===opt.v ? 'border-accent-500 bg-accent-50' : 'border-slate-200 hover:border-accent-400'"
               class="text-left border-2 rounded-xl p-4 transition">
               <div class="font-bold text-brand-900" x-text="opt.label"></div>
               <div class="text-xs text-slate-500 mt-1" x-text="opt.hint"></div>
@@ -203,19 +204,18 @@ tailwind.config = {
         </div>
       </div>
 
-      <!-- Q2 -->
+      <!-- Q2：痛點（共鳴）-->
       <div x-show="quizStep===2">
-        <div class="text-xs text-slate-500 mb-1">Q2 / 3</div>
-        <h3 class="text-lg md:text-xl font-bold text-brand-900 mb-4">你預計投入的資金範圍？</h3>
+        <div class="text-xs text-slate-500 mb-1">Q2 / 5 · 痛點共鳴</div>
+        <h3 class="text-lg md:text-xl font-bold text-brand-900 mb-4">經營實體店，你最想避開哪種地雷？</h3>
         <div class="grid gap-3">
           <template x-for="opt in [
-            { v:'u150', label:'150 萬以下',      hint:'適合小坪數/彰化以南' },
-            { v:'150_200', label:'150-200 萬',   hint:'20-30 坪入門方案' },
-            { v:'200_280', label:'200-280 萬',   hint:'30-40 坪主力方案' },
-            { v:'280p', label:'280 萬以上',      hint:'大坪數/都會區高端配置' },
+            { v:'staff',   label:'👥 員工難請、排班與人事心力交瘁',      hint:'無人化模式可完全避免' },
+            { v:'cash',    label:'💳 現場收銀帳務混亂、有內鬼風險',       hint:'預收機制 + 自動結算' },
+            { v:'utility', label:'⚡ 無效的冷氣水電與固定開銷',            hint:'遠端精確控電' },
           ]" :key="opt.v">
-            <button type="button" @click="quiz.budget = opt.v; quizStep = 3"
-              :class="quiz.budget===opt.v ? 'border-accent-500 bg-accent-50' : 'border-slate-200 hover:border-accent-400'"
+            <button type="button" @click="quiz.painPoint = opt.v; quizStep = 3"
+              :class="quiz.painPoint===opt.v ? 'border-accent-500 bg-accent-50' : 'border-slate-200 hover:border-accent-400'"
               class="text-left border-2 rounded-xl p-4 transition">
               <div class="font-bold text-brand-900" x-text="opt.label"></div>
               <div class="text-xs text-slate-500 mt-1" x-text="opt.hint"></div>
@@ -225,18 +225,62 @@ tailwind.config = {
         <button @click="quizStep = 1" class="mt-4 text-sm text-slate-500">← 上一題</button>
       </div>
 
-      <!-- Q3 -->
+      <!-- Q3：場地 -->
       <div x-show="quizStep===3">
-        <div class="text-xs text-slate-500 mb-1">Q3 / 3</div>
+        <div class="text-xs text-slate-500 mb-1">Q3 / 5 · 資源盤點</div>
+        <h3 class="text-lg md:text-xl font-bold text-brand-900 mb-4">你目前有場地了嗎？</h3>
+        <div class="grid gap-3">
+          <template x-for="opt in [
+            { v:'has_d1',    label:'有物色物件，原本就是 D1',     hint:'最省時，直接進簽約' },
+            { v:'has_other', label:'有物色物件，但不是 D1',       hint:'我們可幫你評估能否變更' },
+            { v:'looking',   label:'還在找，想請你們幫我',        hint:'場地開發協助服務' },
+            { v:'no_idea',   label:'還沒開始找，想先了解',        hint:'先看方案再決定' },
+          ]" :key="opt.v">
+            <button type="button" @click="quiz.site = opt.v; quizStep = 4"
+              :class="quiz.site===opt.v ? 'border-accent-500 bg-accent-50' : 'border-slate-200 hover:border-accent-400'"
+              class="text-left border-2 rounded-xl p-4 transition">
+              <div class="font-bold text-brand-900" x-text="opt.label"></div>
+              <div class="text-xs text-slate-500 mt-1" x-text="opt.hint"></div>
+            </button>
+          </template>
+        </div>
+        <button @click="quizStep = 2" class="mt-4 text-sm text-slate-500">← 上一題</button>
+      </div>
+
+      <!-- Q4：預算 -->
+      <div x-show="quizStep===4">
+        <div class="text-xs text-slate-500 mb-1">Q4 / 5 · 預算區間</div>
+        <h3 class="text-lg md:text-xl font-bold text-brand-900 mb-4">你預計投入的資金範圍？</h3>
+        <div class="grid gap-3">
+          <template x-for="opt in [
+            { v:'u150', label:'150 萬以下',      hint:'適合小坪數/彰化以南' },
+            { v:'150_200', label:'150-200 萬',   hint:'20-30 坪入門方案' },
+            { v:'200_280', label:'200-280 萬',   hint:'30-40 坪主力方案' },
+            { v:'280p', label:'280 萬以上',      hint:'大坪數/都會區高端配置' },
+          ]" :key="opt.v">
+            <button type="button" @click="quiz.budget = opt.v; quizStep = 5"
+              :class="quiz.budget===opt.v ? 'border-accent-500 bg-accent-50' : 'border-slate-200 hover:border-accent-400'"
+              class="text-left border-2 rounded-xl p-4 transition">
+              <div class="font-bold text-brand-900" x-text="opt.label"></div>
+              <div class="text-xs text-slate-500 mt-1" x-text="opt.hint"></div>
+            </button>
+          </template>
+        </div>
+        <button @click="quizStep = 3" class="mt-4 text-sm text-slate-500">← 上一題</button>
+      </div>
+
+      <!-- Q5：地區 -->
+      <div x-show="quizStep===5">
+        <div class="text-xs text-slate-500 mb-1">Q5 / 5 · 開店地區</div>
         <h3 class="text-lg md:text-xl font-bold text-brand-900 mb-4">預計開店地區？</h3>
         <div class="grid grid-cols-2 gap-3">
           <template x-for="opt in [
-            { v:'north', label:'北北基桃', hint:'需 D1' },
-            { v:'hsinchu', label:'新竹',  hint:'需 D1' },
-            { v:'central', label:'中彰',  hint:'台中需 D1' },
-            { v:'south', label:'雲嘉南高屏', hint:'免 D1' },
-            { v:'east', label:'宜花東離島', hint:'個案評估' },
-            { v:'unsure', label:'還不確定', hint:'都可評估' },
+            { v:'north',   label:'北北基桃',     hint:'需 D1' },
+            { v:'hsinchu', label:'新竹',         hint:'需 D1' },
+            { v:'central', label:'中彰',         hint:'台中需 D1' },
+            { v:'south',   label:'雲嘉南高屏',   hint:'免 D1' },
+            { v:'east',    label:'宜花東離島',   hint:'個案評估' },
+            { v:'unsure',  label:'還不確定',     hint:'都可評估' },
           ]" :key="opt.v">
             <button type="button" @click="quiz.area = opt.v; computeQuiz()"
               :class="quiz.area===opt.v ? 'border-accent-500 bg-accent-50' : 'border-slate-200 hover:border-accent-400'"
@@ -246,7 +290,7 @@ tailwind.config = {
             </button>
           </template>
         </div>
-        <button @click="quizStep = 2" class="mt-4 text-sm text-slate-500">← 上一題</button>
+        <button @click="quizStep = 4" class="mt-4 text-sm text-slate-500">← 上一題</button>
       </div>
     </div>
 
@@ -290,10 +334,26 @@ tailwind.config = {
           </div>
         </div>
 
+        <!-- 動機 + 痛點呼應 -->
+        <div class="mb-4 grid md:grid-cols-2 gap-3">
+          <div class="bg-green-50 border border-green-200 rounded-xl p-4" x-show="quizResult?.motiveMsg">
+            <div class="flex items-start gap-2">
+              <span class="text-xl">💡</span>
+              <div class="text-sm text-slate-700 leading-relaxed" x-text="quizResult?.motiveMsg"></div>
+            </div>
+          </div>
+          <div class="bg-blue-50 border border-blue-200 rounded-xl p-4" x-show="quizResult?.painMsg">
+            <div class="flex items-start gap-2">
+              <span class="text-xl">🎯</span>
+              <div class="text-sm text-slate-700 leading-relaxed" x-text="quizResult?.painMsg"></div>
+            </div>
+          </div>
+        </div>
+
         <!-- 主要卡點 -->
         <div class="mb-5 bg-amber-50 border border-amber-200 rounded-xl p-4">
           <div class="flex items-start gap-3">
-            <span class="text-2xl">🎯</span>
+            <span class="text-2xl">⚠️</span>
             <div class="flex-1">
               <div class="text-xs font-bold text-amber-700 mb-1">你目前最大的變數</div>
               <div class="font-bold text-slate-800" x-text="quizResult?.bottleneck"></div>

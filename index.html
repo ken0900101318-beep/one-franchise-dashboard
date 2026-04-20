@@ -119,47 +119,47 @@ tailwind.config = {
       </a>
     </div>
 
-    <!-- 錨點分叉 -->
-    <div class="mt-6">
-      <div class="text-sm text-brand-100 mb-3 font-medium">👇 或自己探索想看的那一塊</div>
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-3">
-        <a href="#cost" class="group bg-white/10 hover:bg-white/20 active:bg-white/30 border border-white/20 rounded-xl p-3 md:p-4 text-center transition">
-          <div class="text-2xl mb-1">💰</div>
-          <div class="text-sm font-medium">完整費用</div>
+    <!-- 情境分流：3 個入口（取代內容目錄） -->
+    <div class="mt-8">
+      <div class="text-sm text-brand-100 mb-3 font-medium">👇 或直接告訴我你目前的情況</div>
+      <div class="grid md:grid-cols-3 gap-3">
+        <a href="#region" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-4 text-left transition">
+          <div class="text-2xl mb-2">🏠</div>
+          <div class="font-bold text-white mb-1">我有場地</div>
+          <div class="text-xs text-brand-100 leading-relaxed">想先看能不能開、要不要變更 D1、流程怎麼走</div>
+          <div class="text-xs text-accent-400 mt-2 font-medium">→ 跳到法規速查</div>
         </a>
-        <a href="#region" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-3 md:p-4 text-center transition">
-          <div class="text-2xl mb-1">📍</div>
-          <div class="text-sm font-medium">我家能開?</div>
+        <a href="#cost" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-4 text-left transition">
+          <div class="text-2xl mb-2">💰</div>
+          <div class="font-bold text-white mb-1">我沒場地</div>
+          <div class="text-xs text-brand-100 leading-relaxed">想先看預算拆解，以及公司協助找場地的方式</div>
+          <div class="text-xs text-accent-400 mt-2 font-medium">→ 跳到費用與場地協助</div>
         </a>
-        <a href="#calc" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-3 md:p-4 text-center transition">
-          <div class="text-2xl mb-1">📊</div>
-          <div class="text-sm font-medium">回本試算</div>
-        </a>
-        <a href="#model" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-3 md:p-4 text-center transition">
-          <div class="text-2xl mb-1">🛠️</div>
-          <div class="text-sm font-medium">怎麼無人</div>
-        </a>
-        <a href="#law" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-3 md:p-4 text-center transition">
-          <div class="text-2xl mb-1">⚖️</div>
-          <div class="text-sm font-medium">法規怎辦</div>
-        </a>
-        <a href="#pitfall" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-3 md:p-4 text-center transition">
-          <div class="text-2xl mb-1">🕳️</div>
-          <div class="text-sm font-medium">避坑指南</div>
-        </a>
-        <a href="#flow" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-3 md:p-4 text-center transition">
-          <div class="text-2xl mb-1">🚀</div>
-          <div class="text-sm font-medium">加盟流程</div>
-        </a>
-        <a href="#faq" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-3 md:p-4 text-center transition">
-          <div class="text-2xl mb-1">💬</div>
-          <div class="text-sm font-medium">常見問題</div>
-        </a>
-        <a href="#case" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-3 md:p-4 text-center transition">
-          <div class="text-2xl mb-1">✨</div>
-          <div class="text-sm font-medium">真實案例</div>
+        <a href="#calc" class="group bg-white/10 hover:bg-white/20 border border-white/20 rounded-xl p-4 text-left transition">
+          <div class="text-2xl mb-2">📊</div>
+          <div class="font-bold text-white mb-1">先看值不值</div>
+          <div class="text-xs text-brand-100 leading-relaxed">想看回本試算、真實案例、無人化如何運作</div>
+          <div class="text-xs text-accent-400 mt-2 font-medium">→ 跳到試算器</div>
         </a>
       </div>
+
+      <!-- 次級導覽（預設收起）-->
+      <details class="mt-4 text-sm">
+        <summary class="text-brand-100 cursor-pointer hover:text-white transition list-none flex items-center gap-2">
+          <span class="text-xs">▸</span><span>查看完整內容目錄（共 9 項）</span>
+        </summary>
+        <div class="grid grid-cols-3 md:grid-cols-5 gap-2 mt-3">
+          <a href="#cost" class="bg-white/5 hover:bg-white/15 border border-white/10 rounded-lg p-2 text-center transition text-xs">💰 費用</a>
+          <a href="#region" class="bg-white/5 hover:bg-white/15 border border-white/10 rounded-lg p-2 text-center transition text-xs">📍 法規</a>
+          <a href="#calc" class="bg-white/5 hover:bg-white/15 border border-white/10 rounded-lg p-2 text-center transition text-xs">📊 試算</a>
+          <a href="#model" class="bg-white/5 hover:bg-white/15 border border-white/10 rounded-lg p-2 text-center transition text-xs">🛠️ 無人化</a>
+          <a href="#case" class="bg-white/5 hover:bg-white/15 border border-white/10 rounded-lg p-2 text-center transition text-xs">✨ 案例</a>
+          <a href="#pitfall" class="bg-white/5 hover:bg-white/15 border border-white/10 rounded-lg p-2 text-center transition text-xs">🕳️ 避坑</a>
+          <a href="#flow" class="bg-white/5 hover:bg-white/15 border border-white/10 rounded-lg p-2 text-center transition text-xs">🚀 流程</a>
+          <a href="#faq" class="bg-white/5 hover:bg-white/15 border border-white/10 rounded-lg p-2 text-center transition text-xs">💬 FAQ</a>
+          <a href="#law" class="bg-white/5 hover:bg-white/15 border border-white/10 rounded-lg p-2 text-center transition text-xs">⚖️ 合規</a>
+        </div>
+      </details>
     </div>
 
   </div>

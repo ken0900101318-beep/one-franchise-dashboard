@@ -272,10 +272,17 @@ function dashboardApp() {
       const payload = {
         ...this.form,
         concernList: [...this.form.concernList, ...deepenConcerns],
+        // 帶入 Quiz 結果（如果有做過 quiz）
+        quizAnswers: this.quizResult ? { ...this.quiz } : null,
+        quizResult: this.quizResult ? {
+          verdict: this.quizResult.verdict,
+          plan: this.quizResult.plan,
+          bottleneck: this.quizResult.bottleneck,
+        } : null,
         userAgent: navigator.userAgent,
         referrer: document.referrer || 'direct',
         submittedAt: new Date().toISOString(),
-        // honeypot：正常用戶看不到，機器人會亂填
+        // honeypot（欄位名改為 f_a/f_b）
         website: document.getElementById('hp-website')?.value || '',
         company_url: document.getElementById('hp-company-url')?.value || '',
       };

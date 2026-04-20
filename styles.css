@@ -76,6 +76,18 @@ section {
 /* 防止 tailwind CDN 首次載入閃爍 */
 [x-cloak] { display: none !important; }
 
+/* Honeypot 欄位：徹底隱藏（不用 display:none 以避免被機器人直接忽略） */
+.hp-field {
+  position: absolute !important;
+  left: -10000px !important;
+  top: -10000px !important;
+  width: 1px !important;
+  height: 1px !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+  tab-index: -1 !important;
+}
+
 /* 螢光 CTA 緩脈動 */
 @keyframes pulseSlow {
   0%, 100% { box-shadow: 0 4px 14px rgba(132, 204, 22, 0.4), 0 0 0 0 rgba(132, 204, 22, 0.4); }

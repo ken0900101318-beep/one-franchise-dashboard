@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>繳費機測試表 v14.4</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { font-family: -apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif; background: #f3f4f6; color: #0f172a; }
+body { padding: 0 0 120px; }
+
+header.top {
+  position: sticky; top: 0; z-index: 100;
+  background: linear-gradient(135deg, #059669, #10b981);
+  color: #fff; padding: 14px 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.top h1 { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.top .sub { font-size: 12px; opacity: 0.9; margin-top: 2px; }
+.badge-ver {
+  display: inline-block; background: rgba(0,0,0,0.25);
+  padding: 3px 10px; border-radius: 999px;
+  font-size: 12px; margin-left: 6px; font-weight: 500;
+}
+.meta-row { display: flex; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.meta-row input {
+  flex: 1; min-width: 120px; padding: 8px 12px;
+  border: none; border-radius: 8px; font-size: 14px;
+  background: rgba(255,255,255,0.95); color: #0f172a;
+}
+
+.progress-bar {
+  background: rgba(0,0,0,0.2); height: 6px; border-radius: 3px;
+  overflow: hidden; margin-top: 10px;
+}
+.progress-fill { background: #fff; height: 100%; width: 0%; transition: width .3s; }
+.progress-text { font-size: 12px; margin-top: 4px; opacity: 0.9; }
+
+main { padding: 12px; max-width: 800px; margin: 0 auto; }
+
+.category {
+  background: #fff; border-radius: 12px; margin-bottom: 12px;
+  overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.cat-head {
+  padding: 14px 16px; background: #ecfdf5;
+  font-weight: 700; font-size: 15px; color: #065f46;
+  display: flex; justify-content: space-between; align-items: center;
+  cursor: pointer; user-select: none;
+}
+.cat-head.smoke { background: #fef2f2; color: #991b1b; }
+.cat-count { font-size: 12px; font-weight: 500; opacity: 0.75; }
+.cat-body { padding: 0 12px 8px; }
+.cat-body.collapsed { display: none; }
+
+.item {
+  border-bottom: 1px solid #f3f4f6; padding: 12px 0;
+}
+.item:last-child { border-bottom: none; }
+.item-title {
+  font-weight: 600; font-size: 14px; color: #111;
+  margin-bottom: 6px;
+}
+.item-num {
+  display: inline-block; background: #10b981; color: #fff;
+  padding: 1px 8px; border-radius: 4px; font-size: 11px;
+  margin-right: 6px; font-weight: 500;
+}
+.item-desc { font-size: 12px; color: #555; line-height: 1.55; margin-bottom: 8px; white-space: pre-line; }
+.item-expect {
+  font-size: 12px; color: #047857;
+  background: #ecfdf5; padding: 6px 10px;
+  border-radius: 6px; margin-bottom: 8px; line-height: 1.55;
+  border-left: 3px solid #10b981;
+}
+
+.btn-group { display: flex; gap: 6px; margin-bottom: 6px; }
+.btn-choice {
+  flex: 1; padding: 10px 4px; border: 2px solid #e5e7eb;
+  background: #fff; border-radius: 8px; font-size: 13px;
+  font-weight: 600; cursor: pointer; transition: all .15s;
+  color: #64748b;
+}
+.btn-choice:active { transform: scale(0.97); }
+.btn-choice.active.ok { background: #10b981; border-color: #10b981; color: #fff; }
+.btn-choice.active.bad { background: #ef4444; border-color: #ef4444; color: #fff; }
+.btn-choice.active.partial { background: #f59e0b; border-color: #f59e0b; color: #fff; }
+.btn-choice.active.skip { background: #94a3b8; border-color: #94a3b8; color: #fff; }
+
+.note-input {
+  width: 100%; padding: 8px 10px;
+  border: 1px solid #e5e7eb; border-radius: 6px;
+  font-size: 13px; font-family: inherit; resize: vertical;
+  min-height: 36px;
+}
+.note-input:focus { outline: none; border-color: #10b981; }
+.item.flagged { background: #fff7ed; border-radius: 8px; padding: 12px; margin: 8px -6px; }
+
+.bottom-section {
+  background: #fff; border-radius: 12px; padding: 14px;
+  margin-top: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.bottom-section h3 { font-size: 15px; margin-bottom: 8px; color: #065f46; }
+.bottom-section textarea {
+  width: 100%; min-height: 80px;
+  padding: 10px; border: 1px solid #e5e7eb;
+  border-radius: 8px; font-size: 13px; font-family: inherit;
+  resize: vertical;
+}
+
+.submit-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: #fff; padding: 10px 14px;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.1);
+  display: flex; gap: 10px; z-index: 99;
+}
+.btn-submit {
+  flex: 1; background: #10b981; color: #fff;
+  padding: 14px; border: none; border-radius: 10px;
+  font-size: 15px; font-weight: 700;
+  cursor: pointer; box-shadow: 0 2px 8px rgba(16,185,129,0.3);
+}
+.btn-submit:disabled { background: #94a3b8; box-shadow: none; cursor: not-allowed; }
+.btn-save {
+  background: #f3f4f6; color: #334155;
+  padding: 14px 16px; border: none; border-radius: 10px;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+}
+
+.toast {
+  position: fixed; top: 72px; left: 50%; transform: translateX(-50%);
+  background: rgba(0,0,0,0.85); color: #fff; padding: 10px 20px;
+  border-radius: 20px; font-size: 13px; z-index: 999;
+  opacity: 0; transition: opacity .3s; pointer-events: none;
+}
+.toast.show { opacity: 1; }
+
+.done-screen {
+  position: fixed; inset: 0; background: #fff;
+  z-index: 1000; padding: 40px 20px; overflow-y: auto;
+  display: none;
+}
+.done-screen.show { display: block; }
+.done-screen .big-check {
+  width: 80px; height: 80px; border-radius: 50%;
+  background: #10b981; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 40px; margin: 30px auto;
+}
+.done-screen h2 { text-align: center; font-size: 22px; margin-bottom: 12px; }
+.done-screen p { text-align: center; color: #64748b; margin-bottom: 6px; font-size: 14px; }
+.done-screen .stats {
+  background: #f3f4f6; padding: 14px; border-radius: 10px;
+  margin: 20px 0; font-size: 14px; line-height: 1.8;
+}
+.done-screen .fail-list {
+  background: #fef2f2; padding: 12px; border-radius: 8px;
+  margin: 12px 0; font-size: 13px;
+}
+.done-screen .fail-list li { margin-left: 20px; margin-bottom: 4px; color: #991b1b; }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>📱 繳費機測試表<span class="badge-ver">v14.1</span></h1>
+  <div class="sub">版本：2.0.8-5-v14.1 (20867) · 測試機：192.168.0.36</div>
+  <div class="meta-row">
+    <input type="text" id="tester" placeholder="測試員姓名" autocomplete="off">
+    <input type="date" id="test-date">
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+  <div class="progress-text" id="progress-text">已完成 0 / 0 項</div>
+</header>
+
+<main id="app"></main>
+
+<div class="submit-bar">
+  <button class="btn-save" id="btn-save">💾 暫存</button>
+  <button class="btn-submit" id="btn-submit">提交結果</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="done-screen" id="done-screen">
+  <div class="big-check">✓</div>
+  <h2>測試結果已送出！</h2>
+  <p>感謝您的測試</p>
+  <p style="font-size: 12px;">已同步到後端，Ken 可直接查閱</p>
+  <div class="stats" id="done-stats"></div>
+  <div class="fail-list" id="done-fails" style="display:none;"></div>
+  <p style="margin-top: 24px; font-size: 12px; color: #94a3b8;">若需回看可重新整理此頁</p>
+</div>
+
+<script>
+const VERSION = 'v14.4';
+const VERSION_FULL = '2.0.8-5-v14.4';
+const VERSION_CODE = 20870;
+const API_URL = 'https://www.onegame.tw/api/test_results/submit';
+const STORAGE_KEY = 'pay_test_v14_4_draft';
+
+// 測試項定義
+const CATEGORIES = [
+  {
+    key: 'smoke', title: '🚀 煙霧測試（務必先做）', className: 'smoke',
+    items: [
+      { n: '1', t: '開機首頁顯示', d: '打開繳費機 APP', e: '首頁輪播圖 + 左上有「v2.0.8-5-v14.1」黑膠囊徽章' },
+      { n: '2', t: '版本號正確', d: '進「關於」頁看版本', e: '顯示 2.0.8-5-v14.1（不是 v14 / test11）' },
+      { n: '3', t: '網路斷 → 灰燈', d: '關 WiFi 5 秒', e: '首頁徽章燈號變灰色' },
+      { n: '4', t: '網路回 → 綠燈', d: '開回 WiFi', e: '徽章燈號變回綠色' },
+      { n: '5', t: '登入流程 loading', d: '從頭登入一次', e: '看到「🔐 登入中」繁體字有鎖頭 emoji' },
+    ]
+  },
+  {
+    key: 'predetermine', title: '🅐 選包廂',
+    items: [
+      { n: '6', t: '首次彈教學', d: '進包廂列表', e: '彈「📖 如何使用包廂預訂」modal，只有 4 條（看顏色/查時間/直接點/待打掃）' },
+      { n: '7', t: '教學不該有第 5 條', d: '看教學 modal', e: '沒有「📷 看照片/💰 看收費」那條（已移除）' },
+      { n: '8', t: '頂端 5 按鈕', d: '看包廂列表頂端', e: '儲值 / 續訂加時 / 更換座位 / 設備控制 / 我的訂單' },
+      { n: '9', t: '空位查詢', d: '點 🔍 空位查詢', e: '列出當下可立即訂的包廂' },
+      { n: '10', t: '時間條點紅色段', d: '點卡片上的紅色區段', e: '彈 popup 說明該時段已被訂到幾點' },
+      { n: '11', t: '點卡片直接進預訂', d: '點任何包廂卡片', e: '跳預訂詳情頁' },
+    ]
+  },
+  {
+    key: 'pay', title: '🅒 訂單付款（最核心）',
+    items: [
+      { n: '12', t: '預訂頁 UI 不重疊', d: '進預訂詳情頁', e: '右上「登出」附近沒有文字飛過來重疊' },
+      { n: '13', t: '橘色價目表膠囊', d: '看「開始時間」下方', e: '橘色小膠囊寫「價目表 ▼」' },
+      { n: '14', t: '價目表 modal 正確', d: '點橘膠囊', e: '標題「價目表」、8 張卡片（週一MON ~ 週日SUN + 正常時段）、綠色「我知道了」按鈕離底邊有距離' },
+      { n: '15', t: '選套餐', d: '點某個套餐', e: '套餐變綠底，訂單金額自動計算' },
+      { n: '16', t: '現金付款投幣', d: 'step.3 選現金 → 結帳 → 投紙鈔', e: '看到「💰 支付中」loading，popup 顯示已投金額，投滿金額自動成交' },
+      { n: '17', t: '現金找零正確', d: '投 500 付 300 元訂單', e: '找零 popup 顯示「應找零 200」，實際退 2 張 100 元紙鈔' },
+      { n: '18', t: 'LINE Pay 訂單付款', d: 'step.3 選 LINE Pay → 結帳 → 掃碼', e: '跳 LINE Pay 頁（120 秒倒數）→ 掃碼成功 → 跳訂單詳情' },
+      { n: '19', t: 'LINE Pay 掃錯碼', d: '掃不符合格式的碼', e: '不進付款，可以再掃正確的' },
+      { n: '20', t: '餘額抵扣', d: '勾「餘額抵扣」→ 結帳', e: '餘額足 → 0 元完成；不足 → 補現金/LINE Pay' },
+      { n: '21', t: '優惠券 + 電子票券', d: '選優惠券或電子票券', e: '訂單金額減免正確' },
+    ]
+  },
+  {
+    key: 'recharge', title: '🅓 儲值',
+    items: [
+      { n: '22', t: '⭐ LINE Pay 儲值選項（v14 bug 修正）', d: '進儲值頁看付款方式', e: '同時有「現金儲值」和「LINE Pay 儲值」兩個選項！只有現金 = ❌ 立刻回報 Ken' },
+      { n: '23', t: '儲值套餐顯示', d: '進儲值頁', e: '4-6 個儲值套餐 + 上方當前餘額' },
+      { n: '24', t: '現金儲值 500', d: '選 500 套餐 → 現金 → 投 500', e: 'loading「💳 儲值中」→ 餘額 +500' },
+      { n: '25', t: 'LINE Pay 儲值', d: '選套餐 → LINE Pay → 掃碼', e: '儲值成功 toast + 餘額更新' },
+      { n: '26', t: '儲值找零', d: '500 套餐投 1000', e: '找零 500 元' },
+    ]
+  },
+  {
+    key: 'order', title: '🅔 訂單操作',
+    items: [
+      { n: '27', t: '我的訂單列表', d: '點頂端「我的訂單」', e: '訂單按時間排，顯示狀態' },
+      { n: '28', t: '待使用訂單畫面', d: '看剛付完的訂單', e: '綠色大卡 + 進度條 + 「立即開始」/「稍後再開始」兩顆按鈕' },
+      { n: '29', t: '使用中訂單畫面', d: '點立即開始後', e: '包廂密碼水平排紅色大字，底部三按鈕（續單/更換位置/提前離店）' },
+      { n: '30', t: '續單付款', d: '使用中 → 續單 → 選 1 小時 → 付款', e: '跟下單付款一樣流程，付完延長時間' },
+      { n: '31', t: '提前離店（兩層確認）', d: '點提前離店（紅色）', e: '第一層：損失明細 popup，3 秒倒數才能點；第二層：長按 3 秒才確認' },
+      { n: '32', t: '更換座位 10 分鐘內', d: '訂單開始 10 分鐘內換', e: '可以換' },
+      { n: '33', t: '更換座位超時擋住', d: '訂單開始超過 10 分鐘再換', e: '在包廂列表先擋住，顯示「10 分鐘內才可更換」' },
+    ]
+  },
+  {
+    key: 'refund', title: '🅕 異常 & 退款（Ken 要求詳測）',
+    items: [
+      { n: '34', t: '投到一半按取消', d: '現金 popup 投 100 → 按取消', e: '100 元自動退回 + 訂單取消' },
+      { n: '35', t: '投到一半按左上「上一頁」', d: '投幣中點上一頁', e: '跟取消一樣處理（退錢 + 取消訂單）' },
+      { n: '36', t: '倒數時間到（現金付款）', d: '現金 popup 開著不操作', e: '倒數到 0 → 自動退款 + 訂單取消' },
+      { n: '37', t: '倒數時間到（LINE Pay）', d: 'LINE Pay 頁等 120 秒', e: '自動取消，無扣款' },
+      { n: '38', t: '投幣中網路斷', d: '投幣時拔網線', e: '已投的錢不會消失，徽章變灰，loading「📶 網路重連中」' },
+      { n: '39', t: '找零超過 2000', d: '投 2500 付 300', e: '彈「金額過大無法找零，請聯繫工作人員」' },
+      { n: '40', t: '找零零錢不足', d: '繳費機真的零錢不足時付款', e: '彈「零錢不足…再來無法使用現金付款」' },
+      { n: '41', t: 'LINE Pay 餘額不足', d: '用餘額不足的 LINE 掃碼', e: 'toast「餘額不足」，可重試' },
+    ]
+  },
+  {
+    key: 'ui', title: '🅖 UI 視覺檢查',
+    items: [
+      { n: '42', t: '首頁徽章大小適中', d: '看首頁左上', e: '40rpx 字，不遮輪播、有毛玻璃陰影' },
+      { n: '43', t: '價目表標題改名', d: '開價目表 modal', e: '寫「價目表」（不是「特殊時段計價」）' },
+      { n: '44', t: '「我知道了」綠色按鈕', d: '價目表 modal 最下', e: '綠色圓角按鈕、離 Android 導航列有距離' },
+      { n: '45', t: '所有 loading 都是繁體', d: '整個 APP 走一遍', e: '不該出現「加载中、登录中、投币支付中」這類簡體字' },
+      { n: '46', t: 'loading 有 emoji', d: '任何 loading 出現時', e: '前面有 emoji（🔐 ⌛ 💰 💳 🚪 📋 ✅ 等）' },
+    ]
+  },
+  // ==================== v14.4 新增測試 ====================
+  {
+    key: 'v14_4_login', title: '🆕 v14.4 進入頁 + 登入',
+    items: [
+      { n: '47', t: '進入頁店家照片區保留', d: '進 loginMethod', e: '頂部 400rpx 店家照片區仍在' },
+      { n: '48', t: 'APP 主推卡', d: '店家照片下方', e: '綠底卡 + 「📱 手機 APP 掃碼登入」+ 3 個 bullet（⚡3秒/🕐線上續時/🔓看包廂密碼）+ 步驟引導 ↓' },
+      { n: '49', t: '主推卡箭頭動畫', d: '看綠卡內步驟結尾的 ↓', e: '黃色 ↓ 跳動 4-6 次後停止（不再永久跳）' },
+      { n: '50', t: '次要選項雙卡', d: '主推卡下方', e: '「⌨️ 手動輸入（🐢 約 30 秒）」+「🆕 註冊新會員（約 1 分鐘）」並排' },
+      { n: '51', t: 'QR Code 引導區', d: '頁面最底', e: '「還沒下載 ONE 聚 APP？掃描右邊 QR Code 下載」+ QR' },
+      { n: '52', t: '會員登入頁無店家照片', d: '進手動登入', e: '直接 x-header + 標題（不再有 400rpx 照片）' },
+      { n: '53', t: '大字輸入框 + 自動分段', d: '輸入手機號 0900123456', e: '畫面顯示「0900 123 456」自動分段' },
+      { n: '54', t: '自製數字鍵盤', d: '會員登入頁下方', e: '3×4 大鍵盤（1-9 / ⌫ / 0 / 清除）按鍵 32rpx 字' },
+      { n: '55', t: '密碼欄走系統 IME', d: '點密碼欄', e: '彈系統英數鍵盤（不是自製數字鍵盤）→ 可輸入英文+數字' },
+      { n: '56', t: '密碼眼睛 toggle', d: '輸入密碼後點 👁', e: '密碼黑點 ↔ 明文切換' },
+      { n: '57', t: '灰色切換驗證碼登入', d: '確定登入下方', e: '灰底圓角小卡「↻ 沒密碼？切換驗證碼登入」' },
+      { n: '58', t: '確定登入按鈕跟切換卡對齊', d: '看兩張卡左右邊緣', e: '完全對齊（同 30rpx margin）' },
+      { n: '59', t: 'footer 同意協議', d: '確定登入下方文字', e: '「點擊「確定登入」即同意《登入協議》」（不再強制勾選）' },
+    ]
+  },
+  {
+    key: 'v14_4_register', title: '🆕 v14.4 註冊頁',
+    items: [
+      { n: '60', t: '註冊頁無店家照片', d: '進非會員註冊', e: '直接 x-header + 標題' },
+      { n: '61', t: '輸入框 + 鍵盤跟登入頁同款', d: '看註冊輸入區', e: 'big-input 大字輸入 + 自製數字鍵盤跟 menu.vue 一模一樣' },
+      { n: '62', t: '+886 國碼前綴', d: '看手機號欄', e: '左邊有「+886」綠底膠囊' },
+      { n: '63', t: '驗證碼欄取得驗證碼按鈕', d: '看驗證碼欄', e: '右側綠色 pill「取得驗證碼」' },
+      { n: '64', t: '密碼欄走系統 IME', d: '點密碼', e: '彈系統英數鍵盤可輸英文' },
+      { n: '65', t: '邀請碼預設收摺', d: '密碼欄下方', e: '「有邀請碼？（可不填）點此展開 ▾」灰色虛線框' },
+      { n: '66', t: '邀請碼可不填', d: '不點展開直接註冊', e: '可成功註冊（不擋）' },
+      { n: '67', t: '比例跟會員登入一致', d: '對比 menu vs register 兩頁', e: '邊框、padding、按鈕高度都一致' },
+    ]
+  },
+  {
+    key: 'v14_4_room_list', title: '🆕 v14.4 包廂列表（自己訂單）',
+    items: [
+      { n: '68', t: '我的訂單包廂橘框', d: '有訂單後進包廂列表', e: '自己訂單的包廂卡有橘色 4rpx 邊框 + 微陰影' },
+      { n: '69', t: '⭐ 您的訂單 badge', d: '看包廂名旁', e: '橘色 pill「★ 您的訂單」凸出在卡片右上' },
+      { n: '70', t: '雙 CTA 按鈕', d: '自己訂單包廂卡底部', e: '「續訂加時」（橘）+「新訂單」（灰）並排' },
+      { n: '71', t: '點續訂加時跳對訂單', d: '點橘色續訂加時', e: '跳 extend_order，上方顯示正確的「目前訂單結束」+「剩餘」（不是 NaN）' },
+      { n: '72', t: '點新訂單跳預訂頁', d: '點灰色新訂單', e: '跳 detail.vue 可選其他日期（不是續訂）' },
+      { n: '73', t: '多包廂同帳號', d: '同帳號開 2-3 個包廂', e: '所有自己訂單的包廂都會有橘框 + badge + 雙 CTA' },
+      { n: '74', t: '他人/閒置包廂單按鈕', d: '看別人訂的或空閒包廂', e: '只有「立即預訂」單顆綠色按鈕（無橘框、無 badge）' },
+    ]
+  },
+  {
+    key: 'v14_4_detail', title: '🆕 v14.4 預訂頁全新 UI',
+    items: [
+      { n: '75', t: '步驟標題中文加大', d: '看 step.1 / step.2 / step.3', e: '改「第一步：選擇預約時間」「第二步：選擇時長」「第三步：付款結帳」加粗綠色邊' },
+      { n: '76', t: '日期 + 時間同行卡片', d: '第一步區', e: '[📅 日期] [🕐 時間] 兩格並排卡片' },
+      { n: '77', t: '自訂時長 + 訂單金額同行', d: '第二步區', e: '[自訂時長] [訂單金額 詳情▾] 兩格並排' },
+      { n: '78', t: '電子票券在 step.2', d: '看第二步最下', e: '「🎫 電子票券：點選使用（X 張可用）」獨立一行（不再在 step.3）' },
+      { n: '79', t: '票券選中橘色橫幅', d: '點電子票券選一張', e: '彈橘色橫幅「✓ 使用電子票券中（X 小時）」+ 套餐 ul 灰化（仍可點切換）' },
+      { n: '80', t: '票券選中自訂時長提示', d: '套用票券後看自訂時長 cell', e: '顯示「使用電子票券中」灰字' },
+      { n: '81', t: '電子票券 + 優惠券順序', d: '看 step.3 第一行', e: '「電子票券」在前（左），「優惠券」在後（右）' },
+      { n: '82', t: '選完票券自動關 popup', d: '點某張電子票券', e: 'popup 自動關閉（不用點空白）' },
+      { n: '83', t: '優惠券 + 餘額同排（折抵類）', d: '看 step.3 開頭', e: '[🎟️ 優惠券] [💰 餘額抵扣 $XX] 同一排（不再是 3 卡並排）' },
+      { n: '84', t: '會員折扣達標才顯示', d: '訂單金額 < 門檻 vs 達門檻', e: '未達標：完全不顯示會員折扣列；達標：顯示橘字 -$XX' },
+      { n: '85', t: '付款方式 LINE Pay + 現金', d: '看 step.3 下方', e: '兩格並排（餘額已搬到上面），不再是 3 格' },
+      { n: '86', t: '付款方式整塊可點', d: '點 LINE Pay 卡任意位置', e: '整張卡都會選中（不只圓圈）' },
+      { n: '87', t: '機台零錢不足現金消失', d: '機台零錢狀態=不足時', e: '現金卡自動消失，剩 LINE Pay 一張' },
+      { n: '88', t: '勾餘額抵扣可切回 LINE Pay', d: '勾餘額後點 LINE Pay', e: '能切換（不再 disabled 鎖死）→ 自動取消餘額勾選' },
+      { n: '89', t: '餘額足夠付清付款區隱藏', d: '餘額 > 訂單金額時勾抵扣', e: 'LINE Pay/現金 整列消失（無需選付款方式）' },
+      { n: '90', t: '推薦時間後可改 timeText', d: '時段衝突時點「改 X:XX 開始」', e: '上方時間欄不被鎖死（仍可重新點開 picker 改）' },
+      { n: '91', t: '結帳按鈕未選方案 disabled', d: '進預訂頁不選任何方案', e: '結帳按鈕變灰寫「請先選擇時長或電子票券」' },
+      { n: '92', t: '結帳按鈕劃線原價', d: '套用優惠券或會員折扣後', e: '結帳按鈕顯示「結帳 · $650 $550」（劃線原價 + 實付）' },
+      { n: '93', t: '不再出現 $NaN', d: '剛進頁未選方案', e: '訂單金額 / 結帳按鈕都顯示 $0（不是 NaN）' },
+      { n: '94', t: '餘額未啟用結帳前提示', d: '有餘額但沒勾抵扣按結帳', e: '彈 popup「💰 您有可用餘額...啟用後可省 $XX」雙按鈕' },
+      { n: '95', t: '「手動輸入時長」改名', d: '看自訂時長 placeholder', e: '不再寫「選自訂沒套餐」（已改「手動輸入時長」）' },
+      { n: '96', t: '票券彈窗間距加大', d: '開電子票券 popup', e: '票券卡片 padding/margin 寬鬆，不擠' },
+    ]
+  },
+  {
+    key: 'v14_4_extend', title: '🆕 v14.4 續訂頁',
+    items: [
+      { n: '97', t: '頂部訂單結束 + 剩餘', d: '進續訂頁看頂部', e: '「目前訂單結束 04/25 18:20」+「剩餘 04:32」（不是 NaN）' },
+      { n: '98', t: '單張票券自動套用', d: '客人有 1 張票券', e: '進續訂頁自動套用 + toast「已自動套用您的電子票券，可隨時取消」' },
+      { n: '99', t: '多張票券提示可切換', d: '客人有 3 張票券', e: 'toast「已自動套用您的電子票券（共 3 張可選），可手動切換」' },
+      { n: '100', t: '同 detail 卡片風格', d: '看續訂頁 step.2 / step.3', e: '佈局跟新版預訂頁一致（卡片化、票券提示、餘額排版）' },
+    ]
+  },
+  {
+    key: 'v14_4_pay_machine', title: '🆕 v14.4 投鈔頁全新 UI',
+    items: [
+      { n: '101', t: '訂單資訊在最上方', d: '進投鈔頁', e: '訂單編號 + 使用時段 在 x-header 下方第一個區塊（不再藏在中段）' },
+      { n: '102', t: '訂單編號加大字', d: '看訂單編號', e: '完整顯示 OR1777096976675238（不截斷）+ 字 28rpx 粗體（監視器可看）' },
+      { n: '103', t: '包廂名 chip', d: '看金額 Hero 左上', e: '綠色橢圓 pill「🏠 球場 D」' },
+      { n: '104', t: '訂單金額 Hero 大字', d: '訂單金額顯示位置', e: '54rpx 綠色大字（最醒目）' },
+      { n: '105', t: '已付 / 還差 對比', d: '投錢後看 Hero', e: '已付（橘色）/ 還差（紅色）兩行顯示' },
+      { n: '106', t: '進度條動畫', d: '投鈔時看進度條', e: '隨已付/總額比例填充（綠色），右下顯示「已付 X%」' },
+      { n: '107', t: '投鈔位置箭頭', d: '看 Hero 下方橘色框', e: '「↓ 請從繳費機下方投入紙鈔/硬幣 ↓」橘色箭頭跳動 6 次後停' },
+      { n: '108', t: '接受面額 4 卡並排', d: '看面額卡', e: '[1000][500][100][50] 同款白底淡灰邊（純資訊不可點）' },
+      { n: '109', t: '一張投完再投提示', d: '面額卡下方', e: '橘色框「⚠ 請一張投完再投下一張，避免堵著入口」' },
+      { n: '110', t: '線上服務 QR + 文字', d: '看投鈔頁底部', e: 'QR + 「📱 掃碼上線體驗更便利 / 手機開門 · 看密碼 · 線上續時」' },
+      { n: '111', t: '投滿瞬間切換', d: '投滿訂單金額', e: 'Hero 變綠 + 大 ✓ + 「付款完成」標題 + 進度條 100% 深綠' },
+      { n: '112', t: '完成過渡訊息', d: '付款完成時看下方', e: '「⏳ 即將跳轉至訂單頁，請稍候...」（沒有「進入店家」按鈕）' },
+      { n: '113', t: '舊店家提醒區已移除', d: '看投鈔頁', e: '不再有底部「店家提醒（如前方訂單已結束...）」一大塊' },
+    ]
+  },
+  {
+    key: 'v14_4_exit_confirm', title: '🆕 v14.4 投鈔退出二次確認',
+    items: [
+      { n: '114', t: '沒投錢按上一頁直接返', d: '進投鈔頁不投錢按上一頁', e: '直接返回（無 popup）' },
+      { n: '115', t: '投錢中按上一頁彈確認', d: '投 100 元後按上一頁', e: '彈 popup「⚠️ 正在付款中 / 已投入 $X 尚未完成付款 / 確定取消並退鈔嗎？」' },
+      { n: '116', t: '投錢中按登出彈確認', d: '投錢後按登出', e: '同樣彈 popup（確定登出並退鈔嗎？）' },
+      { n: '117', t: '投錢中按 Android 返回鍵', d: '投錢後按螢幕底部返回鍵', e: '同樣彈 popup（不再直接退出）' },
+      { n: '118', t: 'popup「繼續付款」可關閉', d: '彈出時點「繼續付款」', e: '回到投鈔頁繼續投' },
+      { n: '119', t: 'popup「確定退出並退鈔」', d: '彈出時點橘色按鈕', e: '走退鈔流程（錢退回 + 訂單取消）' },
+    ]
+  },
+  {
+    key: 'v14_4_offline', title: '🆕 v14.4 斷網保護',
+    items: [
+      { n: '120', t: '投鈔中拔網路', d: '投鈔時關 WiFi', e: '頂部彈紅色閃爍 banner「📶 網路中斷 / 已投入鈔票會保留，網路恢復後自動繼續」' },
+      { n: '121', t: '網路恢復 banner 消失', d: '開回 WiFi', e: 'banner 自動消失，恢復正常' },
+      { n: '122', t: '儲值頁同樣有 banner', d: '進儲值頁拔網', e: '一樣彈紅色 banner' },
+    ]
+  },
+  {
+    key: 'v14_4_age', title: '🆕 v14.4 年齡驗證（後端啟用才生效）',
+    items: [
+      { n: '123', t: '橘色橫幅顯示', d: '進預訂頁（後端開啟年齡驗證 + 客人沒填生日）', e: '頁面頂部彈橘色 banner「🔞 本店限滿 18 歲會員消費 / 結帳時須提供生日資料」' },
+      { n: '124', t: '結帳被擋 popup', d: '按結帳沒填生日', e: '彈統一風格 popup「🔞 本店須驗證年齡 / 依本店規定...僅限滿 18 歲會員消費」+「補填生日」按鈕' },
+      { n: '125', t: 'birthdayBox 三欄', d: '點補填生日', e: '彈卡片：[年] [月] [日] 三格大字選擇' },
+      { n: '126', t: '即時年齡計算', d: '選了 1995-01-01', e: '下方顯示「✓ 您的年齡：30 歲，可正常消費」綠色' },
+      { n: '127', t: '未滿 18 阻擋', d: '選了 2010-01-01', e: '下方顯示「✗ 您的年齡：15 歲，未滿 18 歲，無法購買」紅色 + 確認按鈕灰' },
+    ]
+  },
+  {
+    key: 'v14_4_xheader', title: '🆕 v14.4 共通 x-header / 視覺',
+    items: [
+      { n: '128', t: '上一頁按鈕質感', d: '看任何頁左上', e: '白底 + 淡灰邊框 + 微陰影 + 黑字（不再橘色鮭魚色）' },
+      { n: '129', t: '登出按鈕警示色', d: '看任何頁右上', e: '淺紅底 + 淡紅邊 + 紅字（警示語意）' },
+      { n: '130', t: '倒數時間綠色 + 標籤', d: '看任何頁中間倒數', e: '「剩餘 04:32」灰色「剩餘」+ 綠色大字數字（等寬不抖動）' },
+      { n: '131', t: '邊框統一中淺灰 #b0b0b0', d: '看所有 input/卡片邊框', e: '比之前 #e0e0e0 明顯，不再太淡' },
+      { n: '132', t: '白字按鈕邊緣銳利', d: '看綠色按鈕白字（如登入/結帳）', e: 'text-shadow 加微黑描邊讓邊緣清楚（rockchip 上不糊）' },
+    ]
+  },
+  {
+    key: 'v14_4_perf', title: '🆕 v14.4 效能 / 流暢度',
+    items: [
+      { n: '133', t: '進預訂頁不卡', d: '從包廂列表點包廂進', e: '進入流暢，無明顯延遲（v14.4 已拿掉 GPU 重的 gradient/transition）' },
+      { n: '134', t: '進投鈔頁不卡', d: '結帳走現金跳投鈔頁', e: '進入快速無卡頓' },
+      { n: '135', t: '投鈔過程流暢', d: '連續投 5 張紙鈔', e: '每張投入後已付金額立即更新，進度條跑順' },
+      { n: '136', t: '無持續動畫吃 GPU', d: '進入頁/投鈔頁靜置 30 秒', e: '只有倒數時間每秒跳，其他箭頭/動畫都跑幾次後停止' },
+    ]
+  },
+];
+
+let state = {};
+CATEGORIES.forEach(c => c.items.forEach(i => state[i.n] = { choice: null, note: '' }));
+
+function loadDraft() {
+  try {
+    const draft = localStorage.getItem(STORAGE_KEY);
+    if (draft) {
+      const d = JSON.parse(draft);
+      state = d.state || state;
+      if (d.tester) document.getElementById('tester').value = d.tester;
+      if (d.date) document.getElementById('test-date').value = d.date;
+    }
+  } catch (e) {}
+}
+function saveDraft() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      state,
+      tester: document.getElementById('tester').value,
+      date: document.getElementById('test-date').value,
+      ts: Date.now(),
+    }));
+  } catch (e) {}
+}
+
+function render() {
+  const app = document.getElementById('app');
+  app.innerHTML = '';
+  CATEGORIES.forEach(cat => {
+    const section = document.createElement('div');
+    section.className = 'category';
+    const done = cat.items.filter(i => state[i.n] && state[i.n].choice).length;
+    section.innerHTML = `
+      <div class="cat-head ${cat.className || ''}" onclick="toggleCat('${cat.key}')">
+        <span>${cat.title}</span>
+        <span class="cat-count"><span id="done-${cat.key}">${done}</span> / ${cat.items.length}</span>
+      </div>
+      <div class="cat-body" id="body-${cat.key}"></div>
+    `;
+    app.appendChild(section);
+    const body = section.querySelector('.cat-body');
+    cat.items.forEach(item => {
+      const cur = state[item.n] || {};
+      const div = document.createElement('div');
+      div.className = 'item' + (cur.choice === 'bad' || cur.choice === 'partial' ? ' flagged' : '');
+      div.innerHTML = `
+        <div class="item-title"><span class="item-num">${item.n}</span>${item.t}</div>
+        <div class="item-desc"><b>步驟</b>：${item.d}</div>
+        <div class="item-expect">✓ <b>預期</b>：${item.e}</div>
+        <div class="btn-group">
+          <button class="btn-choice ${cur.choice === 'ok' ? 'active ok' : ''}" data-n="${item.n}" data-v="ok">✅ 好</button>
+          <button class="btn-choice ${cur.choice === 'bad' ? 'active bad' : ''}" data-n="${item.n}" data-v="bad">❌ 不好</button>
+          <button class="btn-choice ${cur.choice === 'partial' ? 'active partial' : ''}" data-n="${item.n}" data-v="partial">⚠ 部分</button>
+          <button class="btn-choice ${cur.choice === 'skip' ? 'active skip' : ''}" data-n="${item.n}" data-v="skip">— 略</button>
+        </div>
+        <textarea class="note-input" data-n="${item.n}" placeholder="備註（異常必填，越詳細越好）">${cur.note || ''}</textarea>
+      `;
+      body.appendChild(div);
+    });
+  });
+  updateProgress();
+}
+
+function toggleCat(key) {
+  const body = document.getElementById('body-' + key);
+  body.classList.toggle('collapsed');
+}
+window.toggleCat = toggleCat;
+
+function updateProgress() {
+  let total = 0, done = 0;
+  CATEGORIES.forEach(cat => {
+    cat.items.forEach(item => {
+      total++;
+      if (state[item.n] && state[item.n].choice) done++;
+    });
+    const el = document.getElementById('done-' + cat.key);
+    if (el) el.textContent = cat.items.filter(i => state[i.n] && state[i.n].choice).length;
+  });
+  document.getElementById('progress-fill').style.width = (done / total * 100) + '%';
+  document.getElementById('progress-text').textContent = `已完成 ${done} / ${total} 項`;
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 1800);
+}
+
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('btn-choice')) {
+    const n = e.target.dataset.n;
+    const v = e.target.dataset.v;
+    if (!state[n]) state[n] = { choice: null, note: '' };
+    state[n].choice = v;
+    saveDraft();
+    render();
+  }
+});
+document.addEventListener('input', (e) => {
+  if (e.target.classList.contains('note-input')) {
+    const n = e.target.dataset.n;
+    if (!state[n]) state[n] = { choice: null, note: '' };
+    state[n].note = e.target.value;
+    saveDraft();
+  }
+});
+
+document.getElementById('btn-save').addEventListener('click', () => {
+  saveDraft();
+  toast('💾 已暫存到本機');
+});
+
+document.getElementById('btn-submit').addEventListener('click', async () => {
+  const tester = document.getElementById('tester').value.trim();
+  if (!tester) {
+    toast('請先填寫測試員姓名');
+    document.getElementById('tester').focus();
+    return;
+  }
+  const date = document.getElementById('test-date').value || new Date().toISOString().slice(0,10);
+
+  // 統計
+  const results = { ok: [], bad: [], partial: [], skip: [], pending: [] };
+  CATEGORIES.forEach(cat => {
+    cat.items.forEach(item => {
+      const s = state[item.n];
+      const rec = { n: item.n, t: item.t, note: s && s.note || '' };
+      if (!s || !s.choice) results.pending.push(rec);
+      else results[s.choice].push(rec);
+    });
+  });
+
+  if (results.pending.length > 0) {
+    if (!confirm(`還有 ${results.pending.length} 項未完成，確定要現在提交嗎？`)) return;
+  }
+
+  const payload = {
+    _pay_test_report: true,
+    version: VERSION_FULL,
+    versionCode: VERSION_CODE,
+    tester, date,
+    submittedAt: new Date().toISOString(),
+    summary: {
+      total: Object.values(results).reduce((s, a) => s + a.length, 0),
+      ok: results.ok.length,
+      bad: results.bad.length,
+      partial: results.partial.length,
+      skip: results.skip.length,
+      pending: results.pending.length,
+    },
+    results,
+    overallNote: document.getElementById('overall-note') ? document.getElementById('overall-note').value : '',
+  };
+
+  // 產生唯一 order_no 方便 Ken 撈
+  const orderNo = '_TEST_REPORT_' + tester.replace(/\s+/g, '_') + '_' + Date.now();
+  const body = new URLSearchParams();
+  body.append('order_no', orderNo);
+  body.append('params', JSON.stringify(payload));
+
+  let submitOk = false;
+  let submitMsg = '';
+  try {
+    const r = await fetch(API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: body.toString(),
+    });
+    const j = await r.json();
+    submitOk = j && (j.code === 1 || j.code === '1');
+    submitMsg = j && j.msg || '';
+  } catch (e) {
+    console.warn('submit failed', e);
+    submitMsg = e && e.message || String(e);
+  }
+  if (!submitOk) {
+    alert('⚠ 提交可能失敗：' + (submitMsg || '未知錯誤') + '\n請重試或聯繫 Ken');
+    return;
+  }
+
+  // 顯示結果
+  document.getElementById('done-stats').innerHTML = `
+    <b>測試員：</b>${tester}<br>
+    <b>日期：</b>${date}<br>
+    <b>總計：</b>${payload.summary.total} 項<br>
+    <b>✅ 通過：</b>${payload.summary.ok} ·
+    <b style="color:#ef4444">❌ 失敗：</b>${payload.summary.bad} ·
+    <b style="color:#f59e0b">⚠ 部分：</b>${payload.summary.partial} ·
+    <b style="color:#94a3b8">略：</b>${payload.summary.skip} ·
+    <b>未測：</b>${payload.summary.pending}<br>
+    <b>提交時間：</b>${new Date().toLocaleString('zh-TW')}<br>
+    <b>編號：</b><code style="font-size:10px;">${orderNo}</code>
+  `;
+  if (results.bad.length > 0 || results.partial.length > 0) {
+    const fails = [...results.bad, ...results.partial];
+    document.getElementById('done-fails').style.display = 'block';
+    document.getElementById('done-fails').innerHTML =
+      '<b>❌ 異常項目：</b><ul>' +
+      fails.map(f => `<li>${f.n}. ${f.t}${f.note ? ' — ' + f.note : ''}</li>`).join('') +
+      '</ul>';
+  }
+  document.getElementById('done-screen').classList.add('show');
+  localStorage.removeItem(STORAGE_KEY);
+});
+
+// 初始化
+document.getElementById('test-date').value = new Date().toISOString().slice(0,10);
+loadDraft();
+render();
+
+// 加整體備註到最下方
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    const bottom = document.createElement('div');
+    bottom.className = 'bottom-section';
+    bottom.innerHTML = `
+      <h3>📝 整體備註</h3>
+      <textarea id="overall-note" placeholder="其他想補充的（例：整體感受、建議、發現的其他問題）"></textarea>
+    `;
+    document.getElementById('app').appendChild(bottom);
+  }, 0);
+});
+</script>
+</body>
+</html>

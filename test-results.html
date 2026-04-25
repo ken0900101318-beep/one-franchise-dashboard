@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>繳費機測試報告</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: -apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif; background: #f3f4f6; color: #0f172a; }
+body { padding: 0 0 40px; }
+
+header.top {
+  background: linear-gradient(135deg, #0891b2, #06b6d4);
+  color: #fff; padding: 18px 20px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.top h1 { font-size: 20px; font-weight: 700; display: flex; align-items: center; gap: 10px; justify-content: space-between; }
+.top .total { font-size: 14px; opacity: 0.9; margin-top: 4px; }
+.btn-refresh { background: rgba(255,255,255,0.2); color: #fff; border: none; padding: 8px 16px; border-radius: 8px; font-size: 14px; cursor: pointer; }
+
+main { padding: 16px; max-width: 960px; margin: 0 auto; }
+.loading, .empty { text-align: center; padding: 60px 20px; color: #64748b; }
+
+.card {
+  background: #fff; border-radius: 12px; padding: 16px;
+  margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  cursor: pointer; transition: all .15s;
+}
+.card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); transform: translateY(-1px); }
+.card-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.card-tester { font-weight: 700; font-size: 16px; color: #0f172a; }
+.card-version { background: #e0f2fe; color: #0369a1; padding: 2px 10px; border-radius: 999px; font-size: 12px; font-weight: 600; }
+.card-ts { font-size: 12px; color: #94a3b8; margin-bottom: 10px; }
+
+.summary {
+  display: flex; gap: 6px; flex-wrap: wrap;
+  font-size: 12px; font-weight: 600;
+}
+.pill { padding: 3px 10px; border-radius: 999px; }
+.pill.ok { background: #dcfce7; color: #065f46; }
+.pill.bad { background: #fee2e2; color: #991b1b; }
+.pill.partial { background: #fef3c7; color: #92400e; }
+.pill.skip { background: #f1f5f9; color: #475569; }
+.pill.pending { background: #ede9fe; color: #5b21b6; }
+
+.has-issues { border-left: 4px solid #ef4444; }
+.all-pass { border-left: 4px solid #22c55e; }
+
+.detail-screen {
+  position: fixed; inset: 0; background: #fff;
+  z-index: 100; overflow-y: auto; padding: 0 0 40px;
+  display: none;
+}
+.detail-screen.show { display: block; }
+.detail-head {
+  background: #0891b2; color: #fff; padding: 16px 20px;
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; gap: 12px;
+}
+.btn-back { background: rgba(255,255,255,0.2); color: #fff; border: none; padding: 8px 14px; border-radius: 8px; font-size: 14px; cursor: pointer; }
+.detail-body { padding: 16px; max-width: 960px; margin: 0 auto; }
+.detail-meta {
+  background: #f8fafc; padding: 12px 16px; border-radius: 10px;
+  font-size: 14px; line-height: 1.8; margin-bottom: 16px;
+}
+.detail-meta b { color: #0f172a; }
+
+.section {
+  background: #fff; border-radius: 10px; padding: 14px 16px;
+  margin-bottom: 12px; box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+.section h3 { font-size: 15px; color: #065f46; margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid #e5e7eb; }
+.section.issues { border-left: 4px solid #ef4444; }
+.section.issues h3 { color: #991b1b; }
+
+.item-row {
+  display: flex; gap: 10px; padding: 8px 0; border-bottom: 1px solid #f3f4f6;
+  font-size: 14px;
+}
+.item-row:last-child { border-bottom: none; }
+.item-status { flex-shrink: 0; font-weight: 700; width: 24px; }
+.item-n { color: #94a3b8; flex-shrink: 0; width: 28px; font-size: 12px; }
+.item-content { flex: 1; }
+.item-title { font-weight: 600; color: #0f172a; margin-bottom: 4px; }
+.item-note { font-size: 13px; color: #64748b; background: #fef7e0; padding: 4px 8px; border-radius: 4px; white-space: pre-wrap; margin-top: 4px; }
+
+.overall-note {
+  background: #fffbeb; border-left: 4px solid #f59e0b;
+  padding: 12px 16px; border-radius: 8px; margin-bottom: 16px;
+  font-size: 14px; line-height: 1.6; white-space: pre-wrap;
+}
+
+.error-banner {
+  background: #fee2e2; color: #991b1b; padding: 14px 16px;
+  border-radius: 10px; margin-bottom: 16px; font-size: 14px;
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <h1>
+    <span>📋 繳費機測試報告</span>
+    <button class="btn-refresh" onclick="loadList()">🔄 重新整理</button>
+  </h1>
+  <div class="total" id="total">載入中…</div>
+</header>
+
+<main id="app">
+  <div class="loading">⏳ 載入中…</div>
+</main>
+
+<div class="detail-screen" id="detail-screen">
+  <div class="detail-head">
+    <button class="btn-back" onclick="closeDetail()">← 返回</button>
+    <div id="detail-title" style="font-size: 16px; font-weight: 700;">詳情</div>
+  </div>
+  <div class="detail-body" id="detail-body"></div>
+</div>
+
+<script>
+const API_BASE = 'https://www.onegame.tw/api/test_results';
+
+async function loadList() {
+  const app = document.getElementById('app');
+  app.innerHTML = '<div class="loading">⏳ 載入中…</div>';
+  document.getElementById('total').textContent = '載入中…';
+
+  try {
+    const res = await fetch(API_BASE + '/list?limit=50', { method: 'GET', credentials: 'omit' });
+    const body = await res.json();
+    if (!body || body.code !== 1) throw new Error(body?.msg || 'API error');
+    render(body.data);
+  } catch (e) {
+    app.innerHTML = `<div class="error-banner">
+      ❌ 無法載入報告<br><br>
+      錯誤：${e.message || e}<br><br>
+      <b>可能原因：</b><br>
+      1. 後端 TestResults.php 還沒上傳到 <code>application/api/controller/</code><br>
+      2. 跨域 CORS 被擋（檢查 PHP 是否有 Access-Control-Allow-Origin）<br>
+      3. 後端 API 路徑不對
+    </div>`;
+    document.getElementById('total').textContent = '❌ 無法連線';
+  }
+}
+
+function render(data) {
+  const app = document.getElementById('app');
+  document.getElementById('total').textContent = `共 ${data.total} 筆報告`;
+
+  if (!data.list || data.list.length === 0) {
+    app.innerHTML = '<div class="empty">📭 目前還沒有測試報告</div>';
+    return;
+  }
+
+  app.innerHTML = data.list.map(r => {
+    const s = r.summary || {};
+    const hasIssues = (s.bad || 0) + (s.partial || 0) > 0;
+    const cardClass = hasIssues ? 'has-issues' : (s.ok > 0 ? 'all-pass' : '');
+
+    return `
+      <div class="card ${cardClass}" onclick="openDetail(${r.id})">
+        <div class="card-head">
+          <span class="card-tester">👤 ${escape(r.tester || '未填姓名')}</span>
+          <span class="card-version">${escape(r.version || '-')}</span>
+        </div>
+        <div class="card-ts">📅 ${escape(r.createTime)} · ID #${r.id}</div>
+        <div class="summary">
+          <span class="pill ok">✅ 通過 ${s.ok || 0}</span>
+          ${(s.bad || 0) > 0 ? `<span class="pill bad">❌ 失敗 ${s.bad}</span>` : ''}
+          ${(s.partial || 0) > 0 ? `<span class="pill partial">⚠ 部分 ${s.partial}</span>` : ''}
+          ${(s.skip || 0) > 0 ? `<span class="pill skip">— 略 ${s.skip}</span>` : ''}
+          ${(s.pending || 0) > 0 ? `<span class="pill pending">未測 ${s.pending}</span>` : ''}
+        </div>
+      </div>
+    `;
+  }).join('');
+}
+
+async function openDetail(id) {
+  const screen = document.getElementById('detail-screen');
+  const body = document.getElementById('detail-body');
+  body.innerHTML = '<div class="loading">⏳ 載入中…</div>';
+  screen.classList.add('show');
+
+  try {
+    const res = await fetch(API_BASE + '/detail?id=' + id);
+    const b = await res.json();
+    if (!b || b.code !== 1) throw new Error(b?.msg || 'error');
+    renderDetail(b.data);
+  } catch (e) {
+    body.innerHTML = `<div class="error-banner">載入失敗：${e.message || e}</div>`;
+  }
+}
+
+function renderDetail(data) {
+  const rpt = data.report || {};
+  const results = rpt.results || {};
+  const s = rpt.summary || {};
+
+  document.getElementById('detail-title').textContent =
+    `${rpt.tester || '-'} · ${rpt.version || '-'}`;
+
+  const issues = [...(results.bad || []), ...(results.partial || [])];
+  const body = document.getElementById('detail-body');
+
+  let html = `
+    <div class="detail-meta">
+      <b>測試員：</b>${escape(rpt.tester || '-')}<br>
+      <b>版本：</b>${escape(rpt.version || '-')} (code ${rpt.versionCode || '-'})<br>
+      <b>日期：</b>${escape(rpt.date || '-')}<br>
+      <b>提交時間：</b>${escape(data.createTime)}<br>
+      <b>編號：</b>#${data.id}<br>
+      <b>結果：</b>✅${s.ok || 0} · ❌${s.bad || 0} · ⚠${s.partial || 0} · —${s.skip || 0} · 未測${s.pending || 0}
+    </div>
+  `;
+
+  if (rpt.overallNote && rpt.overallNote.trim()) {
+    html += `<div class="overall-note"><b>📝 整體備註：</b><br>${escape(rpt.overallNote)}</div>`;
+  }
+
+  if (issues.length > 0) {
+    html += `<div class="section issues"><h3>❌ 異常項目 (${issues.length} 項需關注)</h3>`;
+    issues.forEach(i => {
+      html += renderItem(i, results.bad?.includes(i) ? '❌' : '⚠');
+    });
+    html += '</div>';
+  }
+
+  if ((results.ok || []).length > 0) {
+    html += `<div class="section"><h3>✅ 通過項目 (${results.ok.length})</h3>`;
+    results.ok.forEach(i => html += renderItem(i, '✅'));
+    html += '</div>';
+  }
+
+  if ((results.skip || []).length > 0) {
+    html += `<div class="section"><h3>— 略過項目 (${results.skip.length})</h3>`;
+    results.skip.forEach(i => html += renderItem(i, '—'));
+    html += '</div>';
+  }
+
+  if ((results.pending || []).length > 0) {
+    html += `<div class="section"><h3>⏸ 未測項目 (${results.pending.length})</h3>`;
+    results.pending.forEach(i => html += renderItem(i, '⏸'));
+    html += '</div>';
+  }
+
+  body.innerHTML = html;
+}
+
+function renderItem(i, status) {
+  return `
+    <div class="item-row">
+      <span class="item-status">${status}</span>
+      <span class="item-n">${escape(i.n || '')}</span>
+      <div class="item-content">
+        <div class="item-title">${escape(i.t || '')}</div>
+        ${i.note ? `<div class="item-note">📝 ${escape(i.note)}</div>` : ''}
+      </div>
+    </div>
+  `;
+}
+
+function closeDetail() {
+  document.getElementById('detail-screen').classList.remove('show');
+}
+
+function escape(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+// 自動每 60 秒重新整理
+setInterval(loadList, 60000);
+loadList();
+</script>
+</body>
+</html>

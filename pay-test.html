@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>繳費機測試表 v14.5</title>
+<title>繳費機測試表 v14.5.2</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 html, body { font-family: -apple-system, 'PingFang TC', 'Microsoft JhengHei', sans-serif; background: #f3f4f6; color: #0f172a; }
@@ -163,8 +163,8 @@ main { padding: 12px; max-width: 800px; margin: 0 auto; }
 <body>
 
 <header class="top">
-  <h1>📱 繳費機測試表<span class="badge-ver">v14.5</span></h1>
-  <div class="sub">版本：2.0.8-5-v14.5 · 測試機：192.168.0.36</div>
+  <h1>📱 繳費機測試表<span class="badge-ver">v14.5.2</span></h1>
+  <div class="sub">版本：2.0.8-5-v14.5.2 · 測試機：192.168.0.36</div>
   <div class="meta-row">
     <input type="text" id="tester" placeholder="測試員姓名" autocomplete="off">
     <input type="date" id="test-date">
@@ -193,11 +193,11 @@ main { padding: 12px; max-width: 800px; margin: 0 auto; }
 </div>
 
 <script>
-const VERSION = 'v14.5';
-const VERSION_FULL = '2.0.8-5-v14.5';
+const VERSION = 'v14.5.2';
+const VERSION_FULL = '2.0.8-5-v14.5.2';
 const VERSION_CODE = 20870;
 const API_URL = 'https://www.onegame.tw/api/test_results/submit';
-const STORAGE_KEY = 'pay_test_v14_5_draft';
+const STORAGE_KEY = 'pay_test_v14_5_2_draft';
 
 // 測試項定義
 const CATEGORIES = [
@@ -428,9 +428,9 @@ const CATEGORIES = [
       { n: '136', t: '無持續動畫吃 GPU', d: '進入頁/投鈔頁靜置 30 秒', e: '只有倒數時間每秒跳，其他箭頭/動畫都跑幾次後停止' },
     ]
   },
-  // ==================== v14.5 新增測試 ====================
+  // ==================== v14.5.2 新增測試 ====================
   {
-    key: 'v14_5_serial_bug', title: '🆕 v14.5 串口錯誤修復（最重要）',
+    key: 'v14_5_serial_bug', title: '🆕 v14.5.2 串口錯誤修復（最重要）',
     items: [
       { n: '137', t: '退鈔後重新進入付款頁串口正常', d: '進付款頁投 100 元 → 按上一頁 → 確認退鈔 → 退鈔完成後從訂單詳情頁再次點立即付款', e: '✅ 投幣口正常開啟，能再次投入紙鈔（不會卡住沒反應）' },
       { n: '138', t: '連續退出三次串口都正常', d: '重複「進入投鈔→投錢→退出→退鈔→重新進入」流程三次', e: '✅ 每次都能正常進入，串口都能開啟接受紙鈔' },
@@ -439,7 +439,7 @@ const CATEGORIES = [
     ]
   },
   {
-    key: 'v14_5_popup_unify', title: '🆕 v14.5 統一彈窗風格',
+    key: 'v14_5_popup_unify', title: '🆕 v14.5.2 統一彈窗風格',
     items: [
       { n: '141', t: '投鈔退出二次確認彈窗', d: '投鈔中按上一頁', e: '✅ 白底圓角彈窗 + 灰色「繼續付款」+ 綠色「確定退出並退鈔」（與教學彈窗同款風格）' },
       { n: '142', t: '找零中彈窗有進度顯示', d: '需要找零時觀察彈窗', e: '✅ 標題「💰 正在找零」+「100 元紙鈔 X / Y 張」+「50 元硬幣 X / Y 枚」進度行' },
@@ -451,12 +451,11 @@ const CATEGORIES = [
       { n: '148', t: '已有未付款訂單覆寫提示', d: '已有未付款訂單時再下新訂單', e: '✅ 📋 圖示 + 橘色標題「已有未付款的舊訂單」+ 兩段說明 + 「返回不變更」「確認建立新付款」雙按鈕' },
       { n: '149', t: '訂單列表立即開始彈窗', d: '我的訂單列表點立即開始', e: '✅ 「確認立即開始使用？」+ 包廂/時段資訊 + 取消/立即開始雙按鈕' },
       { n: '150', t: '訂單列表查看密碼彈窗', d: '使用中訂單點查看密碼', e: '✅ 包廂名稱 + 門鎖密碼 + 藍牙密碼分行顯示' },
-      { n: '151', t: '店家號碼彈窗', d: '訂單詳情頁點打電話', e: '✅ 標題「📞 店家號碼」+ 電話號碼' },
       { n: '152', t: '儲值退出二次確認', d: '儲值中按上一頁', e: '✅ 標題「⚠ 正在儲值中」+「繼續儲值」「確定退出並退鈔」雙按鈕' },
     ]
   },
   {
-    key: 'v14_5_login_ui', title: '🆕 v14.5 進入頁微調',
+    key: 'v14_5_login_ui', title: '🆕 v14.5.2 進入頁微調',
     items: [
       { n: '153', t: '⚡ 3 秒登入移到標題後', d: '看綠色主推卡', e: '✅「📱 手機 APP 掃碼登入」標題後面有「⚡ 3 秒登入」白底橘字膠囊（不在卡左下）' },
       { n: '154', t: '主推卡內無功能項目', d: '看綠色卡內', e: '✅ 只有標題列 + 步驟引導（不再有 線上續時 / 看包廂密碼 等項目）' },
@@ -466,7 +465,7 @@ const CATEGORIES = [
     ]
   },
   {
-    key: 'v14_5_perf', title: '🆕 v14.5 效能改善',
+    key: 'v14_5_perf', title: '🆕 v14.5.2 效能改善',
     items: [
       { n: '158', t: '進預訂頁不延遲', d: '從包廂列表點包廂進入預訂頁', e: '✅ 進入流暢無感（已修全局注入造成的 uView 子元件 re-render 延遲）' },
       { n: '159', t: '投鈔過程更流暢', d: '連續投 5 張紙鈔對比 v14.4', e: '✅ 進度條更新更順、無頓挫感（串口輪詢 500→800 毫秒降頻）' },
@@ -475,7 +474,7 @@ const CATEGORIES = [
     ]
   },
   {
-    key: 'v14_5_error_log', title: '🆕 v14.5 錯誤記錄完整性',
+    key: 'v14_5_error_log', title: '🆕 v14.5.2 錯誤記錄完整性',
     items: [
       { n: '162', t: '串口送指令失敗會上傳', d: '若投鈔過程串口拋錯（拔線或機械異常）', e: '✅ 後端 hy_pay_client_logs 看得到 type=serial_send_fail 紀錄（不只 console）' },
       { n: '163', t: '串口關閉失敗會上傳', d: '若 onUnload 串口 close 失敗', e: '✅ 後端 log 看得到 type=serial_close_fail 紀錄' },

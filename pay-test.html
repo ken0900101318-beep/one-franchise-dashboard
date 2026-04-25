@@ -163,8 +163,8 @@ main { padding: 12px; max-width: 800px; margin: 0 auto; }
 <body>
 
 <header class="top">
-  <h1>📱 繳費機測試表<span class="badge-ver">v14.1</span></h1>
-  <div class="sub">版本：2.0.8-5-v14.1 (20867) · 測試機：192.168.0.36</div>
+  <h1>📱 繳費機測試表<span class="badge-ver">v14.4</span></h1>
+  <div class="sub">版本：2.0.8-5-v14.4 (20870) · 測試機：192.168.0.36</div>
   <div class="meta-row">
     <input type="text" id="tester" placeholder="測試員姓名" autocomplete="off">
     <input type="date" id="test-date">
@@ -204,8 +204,8 @@ const CATEGORIES = [
   {
     key: 'smoke', title: '🚀 煙霧測試（務必先做）', className: 'smoke',
     items: [
-      { n: '1', t: '開機首頁顯示', d: '打開繳費機 APP', e: '首頁輪播圖 + 左上有「v2.0.8-5-v14.1」黑膠囊徽章' },
-      { n: '2', t: '版本號正確', d: '進「關於」頁看版本', e: '顯示 2.0.8-5-v14.1（不是 v14 / test11）' },
+      { n: '1', t: '開機首頁顯示', d: '打開繳費機 APP', e: '首頁輪播圖 + 左上有「v2.0.8-5-v14.4」黑膠囊徽章' },
+      { n: '2', t: '版本號正確', d: '進「關於」頁看版本', e: '顯示 2.0.8-5-v14.4（不是 v14.1 / v14.3）' },
       { n: '3', t: '網路斷 → 灰燈', d: '關 WiFi 5 秒', e: '首頁徽章燈號變灰色' },
       { n: '4', t: '網路回 → 綠燈', d: '開回 WiFi', e: '徽章燈號變回綠色' },
       { n: '5', t: '登入流程 loading', d: '從頭登入一次', e: '看到「🔐 登入中」繁體字有鎖頭 emoji' },
